@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>I Saw You</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <div class="film-card">
+    <div>
+      <img id="poster" src="" alt="Poster">
+      <div class="film-title">
+        <span id="title"></span>
+      </div><br>
+      <span id="overview"></span>
+
+      <div id="filmInfoCompact"></div>
+
+      <div id="filmCountries"></div>
+     <div class="section">
+        <h2>Regia</h2>
+        <div class="scroll-wrapper">
+          <ul id="directorList"></ul>
+        </div>
+      </div>
+
+      <div class="section"> 
+        <h2>Cast</h2>
+        <div class="scroll-wrapper">
+          <ul id="castList"></ul>
+        </div>
+      </div>
+    </div>
+    <button id="toggleSawed">V</button><br>
+
+    <div class="date-row">
+      <label for="starterDate" id="starterDateLb">Inizio</label>
+      <input id="starterDate" type="date" />
+
+      <label for="endDate" id="endDateLb">Fine</label>
+      <input id="endDate" type="date" />
+
+      <label class="single-day">
+        <input id="singleDay" type="checkbox" />
+        Giorno unico
+      </label>
+    </div>
+
+
+    <div class="star-rating" id="starRating">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+  </div>
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+      });
+  </script>
+  <script type="module" src="scheda_film.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>I Saw You</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body class="scheda-persona">
+  <div class="film-card">
+    <img id="profilo" src="" alt="Foto profilo" />
+    <h1 id="nome"></h1>
+
+    <div id="personInfoCompact"></div>
+
+    <div class="section">
+      <h2>Filmografia</h2>
+      <table id="filmografia" class="film-table"></table>
+    </div>
+
+  </div>
+
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+      });
+  </script>
+  <script type="module" src="scheda_persona.js"></script>
+</body>
+
+</html>

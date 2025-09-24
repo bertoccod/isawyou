@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>I Saw You</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body class="login">
+<!-- FORM DI LOGIN -->
+  <div class="logo">
+    <img src="assets/unclekevin.png" alt="Logo">
+  </div>
+  <div id ="loginForm">
+    <h2>Accedi</h2>
+    <input type="email" id="email" placeholder="Email" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button onclick="login()">Login</button>
+    <p id="errorMessage" style="color: #007b81;"></p>  
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
+
+<!-- SE IMPOSTO GIORNO UNICO DEVE SALVARE-->

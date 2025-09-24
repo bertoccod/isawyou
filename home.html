@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>I Saw You - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body class="home">
+  <div id="titleContainer">
+    <h1>I Saw You!</h1>
+  </div>
+  <div id="totalMovie"></div>
+  <br>
+  <button id="scarica-csv">Scarica CSV</button>
+  <div class="section">
+    <h2>Gli ultimi film visti</h2>
+    <div class="scroll-wrapper">
+      <ul id="results"></ul>
+    </div>
+  </div>
+  <br>
+  <div class="section">
+    <h2>Gli ATTORI più presenti nella raccolta</h2>
+    <div class="scroll-wrapper">
+      <ul id="TopAttore"></ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>I REGISTI/CREATORI più presenti nella raccolta</h2>
+    <div class="scroll-wrapper">
+      <ul id="TopRegista"></ul>
+    </div>div>
+  </div>
+  <div class="section">
+    <h2>I film a 5 STELLE</h2>
+    <div class="scroll-wrapper">
+      <ul id="5Stars"></ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>I PEGGIORI film in raccolta</h2>
+    <div class="scroll-wrapper">
+      <ul id="1Star"></ul>
+    </div>
+  </div>
+  <div>
+    <h2>Statistiche</h2>
+    <div id="statistiche"></div>
+  </div>
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+      });
+  </script>
+  <script type="module" src="home.js"></script>
+ 
+</body>
+</html>
