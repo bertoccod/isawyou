@@ -84,8 +84,8 @@ if (Array.isArray(datiTot.movie_credits.cast)) {
     const year = film.release_date ? film.release_date.slice(0, 4) : "";
 
     titleCell.innerHTML = `
-      <span class="anno">${year}</span>
-      <span class="titolo"><a href="scheda_film.html?id=${film.id}&tipo=movie">${film.title || "(Titolo mancante)"}</a></span>
+      <span class="anno">${year}</span><br>
+      <span class="titolo"><a href="scheda_film.html?id=${film.id}&tipo=movie">${film.title || "(Titolo mancante)"}</a></span><br>
       <span class="personaggio">${film.character}</span>
     `;
 
@@ -133,8 +133,8 @@ if (Array.isArray(datiTot.tv_credits.cast)) {
     const year = serie.first_air_date ? serie.first_air_date.slice(0, 4) : "";
 
     titleCell.innerHTML = `
-      <span class="anno">${year}</span><b
-      <span class="titolo"><a href="scheda_film.html?id=${serie.id}&tipo=tv">${serie.name || "(Titolo mancante)"}</a></span>
+      <span class="anno">${year}</span><br>
+      <span class="titolo"><a href="scheda_film.html?id=${serie.id}&tipo=tv">${serie.name || "(Titolo mancante)"}</a></span><br>
       <span class="personaggio">${serie.character}
       ${serie.episode_count ? ` - ${serie.episode_count} episodi</span>` : ""}
     `;

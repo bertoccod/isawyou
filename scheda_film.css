@@ -37,7 +37,7 @@ body {
 .film-card {
   background-color: var(--input-bg);
   border: 1px solid var(--input-border);
-  border-radius: 12px;
+  border-radius: 30px;
   padding: 1rem;
   box-shadow: 0 0 6px var(--shadow-glow);
   max-width: 60vh;
@@ -47,8 +47,8 @@ body {
 .film-card img {
   width: 100%;
   max-width: 500px;
-  border-radius: 8px;
-  box-shadow: 0 0 6px var(--shadow-glow);
+  border-radius: 30px;
+  box-shadow: 0 0 20px var(--shadow-glow);
   display: block;
   margin: 0 auto 1rem;
 }

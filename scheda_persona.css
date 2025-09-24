@@ -1,0 +1,174 @@
+/* ===================== */
+/* 🎨 Variabili globali  */
+/* ===================== */
+
+:root {
+  --color-bg: #0B1D1A;
+  --color-text: #E6F2EF;
+  --color-accent: #00FF99;
+  --color-secondary: #88BBAA;
+  --color-warning: #FF4F4F;
+  --color-star: #FFD700;
+
+  --button-bg: var(--color-accent);
+  --button-text: var(--color-bg);
+  --input-bg: #112825;
+  --input-border: var(--color-secondary);
+  --shadow-glow: rgba(0, 255, 153, 0.2);
+
+  --font-main: 'Inter', 'Roboto', sans-serif;
+  --font-size-base: 16px;
+  --font-size-title: 24px;
+}
+/* ===================== */
+/* 🎥 Scheda Persona styles */
+/* ===================== */
+
+body.scheda-persona {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  padding: 20px;
+  margin-bottom: 200px;
+  margin-top: 3rem;
+}
+.film-card {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 30px;
+  padding: 1rem;
+  box-shadow: 0 0 6px var(--shadow-glow);
+  max-width: 60vh;
+  margin: 0 auto 2rem;
+}
+
+.film-card img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px var(--shadow-glow);
+  display: block;
+  margin: 0 auto 1rem;
+}
+/*
+#profilo {
+  width: 200px;
+  height: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px var(--shadow-glow);
+  display: block;
+  margin: 0 auto 1rem;
+}
+*/
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    margin: 1rem 0;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    margin: 2rem 0;
+}
+
+#personInfoCompact {
+  text-align: center;
+  font-size: 1.8rem;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+}
+
+.film-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.film-table tr {
+    border-bottom: 1px solid var(--input-border);
+    font-size: 1.4rem;
+}
+
+.film-table td {
+  padding: 0.5rem;
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.film-table td:first-child {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.film-table .titolo a {
+  color: var(--color-accent);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 2.2rem;
+}
+
+.film-table .titolo a:hover {
+  text-decoration: underline;
+}
+
+.film-table .anno {
+  font-size: 1.5rem;
+  color: var(--color-secondary);
+  padding-right: 1.7rem;
+}
+
+.film-table .personaggio,
+.film-table .ruolo,
+.film-table .episodi {
+  font-size: 1.7rem;
+  color: var(--color-text);
+}
+
+.film-table .sezione-titolo {
+  font-weight: bold;
+  color: var(--color-accent);
+  font-size: 2.5rem;
+  padding-top: 1rem;
+}
+.fast-save {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-accent);
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: block;
+
+}
+
+/* Stato "visto" → pulsante pieno verde, senza bordo */
+.fast-save.saved {
+  background-color: var(--color-accent);
+  border: none;
+}
+
+.sezione-titolo {
+  display: block; /* invece di inline-block */
+  width: 100%;
+  background-color: #00FF99;
+  color: #0B1D1A;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.film-table td .sezione-titolo {
+  color: #0B1D1A !important;
+  vertical-align: middle;
+}
