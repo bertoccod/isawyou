@@ -154,7 +154,7 @@ body.home {
   font-family: var(--font-main);
   font-size: var(--font-size-base);
   margin: 0;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -172,7 +172,14 @@ body.home {
 
 .scroll-wrapper {
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
+
+.scroll-wrapper ul li {
+  scroll-snap-align: start;
+}
+
 
 .scroll-wrapper ul {
   display: flex;
@@ -208,14 +215,13 @@ h2 {
 
 li {
   text-align: center;
-  flex: 0 0 auto;
+  flex: 0 0 calc(33.33% - 1rem); /* 3 locandine visibili */
+  max-width: calc(33.33% - 1rem);
 }
 
 li img {
-  width: 350px;
-  height: 400px;
-  border-radius: 8px;
-  box-shadow: 0 0 6px var(--shadow-glow);
+  width: 100%;
+  height: auto;
 }
 
 li span {
@@ -228,6 +234,24 @@ li span {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+@media (max-width: 600px) {
+  .scroll-wrapper ul {
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  li {
+    flex: 0 0 calc(33.33% - 0.5rem);
+    max-width: calc(33.33% - 0.5rem);
+  }
+
+ 
+
+  li span {
+    font-size: 0.9rem;
+  }
 }
 
 #statistiche {
