@@ -29,6 +29,7 @@ body.mycollection {
   color: var(--color-text);
   font-family: var(--font-main);
   padding: 20px;
+  margin-top: 3em;
   margin-bottom: 60px; /* spazio per navbar */
 }
 
