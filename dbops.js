@@ -138,7 +138,7 @@ export async function getMyCollection(num){
     const linkHref = `scheda_film.html?id=${numero}&tipo=${tipo}`;
     li.innerHTML = `
     <a href="${linkHref}" style="text-decoration: none; color: inherit;">
-      <img src="${imgSrc}" alt="${title}">
+      <img src="${imgSrc}" alt="${title}"><br>
       <span>${title}</span>
     </a>`;
     resultsList.appendChild(li);
@@ -280,7 +280,7 @@ export async function esportaCSV() {
 
   const link = document.createElement("a");
   link.setAttribute("href", url);
-  link.setAttribute("download", "dati.csv");
+  link.setAttribute("download", "myMovieDB.csv");
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
