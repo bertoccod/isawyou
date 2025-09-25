@@ -46,12 +46,6 @@ getMyCollection(5);
 //TOP PERSONE IN DB
 const ulAttori = document.getElementById("TopAttore");
 const ulRegisti = document.getElementById("TopRegista");
-/*
-[ulAttori, ulRegisti].forEach(ul => {
-  ul.style.display = "flex";
-  ul.style.flexWrap = "wrap";
-  ul.style.gap = "1rem";
-});*/
 const top = await getTopPersone(6, 6);
 const att = top.topAttori;
 const reg = top.topRegisti;
@@ -62,12 +56,6 @@ renderTopPersone(reg, ulRegisti)
 //TOP E FLOP FILMS
 const ulTop = document.getElementById("5Stars");
 const ulFlop = document.getElementById("1Star");
-/*
-[ulTop, ulFlop].forEach(ul => {
-  ul.style.display = "flex";
-  ul.style.flexWrap = "wrap";
-  ul.style.gap = "1rem";
-});*/
 const topflop = await getTopFlop();
 const topFilm = topflop.topFilms;
 const flopFilm = topflop.flopFilms;
@@ -112,7 +100,7 @@ async function renderTopPersone(lista, ulElement) {
     try {
       img.src = await getProfilePhoto(persona.id);
     } catch {
-      img.src = "placeholder.jpg";
+      img.src = "./assets/noPhoto.png";
     }
 
     const span = document.createElement("span");
