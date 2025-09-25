@@ -66,3 +66,42 @@ body.mycollection {
   max-width: calc(33.33% - 1rem);
   font-size: 1.5rem;
 }
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.type-filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.filter-button.active {
+  opacity: 1;
+  box-shadow: 0 0 8px var(--shadow-glow);
+}
+
+.rating-filter select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  color: var(--color-text);
+  border: 1px solid var(--input-border);
+  font-size: 1.2rem;
+}

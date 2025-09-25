@@ -130,6 +130,9 @@ export async function getMyCollection(num){
     const data = doc.data();
     const li = document.createElement("li");
     li.setAttribute("data-keywords", data.keywords);
+    li.setAttribute("data-stars", String(data.voto));
+    li.setAttribute("data-type", data.tipo); // tipo è "movie" o "tv"
+
     const IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
     const imgSrc = data.poster_path ? `${IMAGE_BASE}${data.poster_path}` : "https://via.placeholder.com/300x450?text=No+Image";
     const title = data.title;
