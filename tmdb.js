@@ -77,6 +77,32 @@ export async function openScheda(id, tipo){
     }));
     return {data, registi, attoriPrincipali}
 }
+export async function renderTrailer(id, tipo) {
+  const endpoint = `https://api.themoviedb.org/3/${tipo}/${id}/videos?api_key=${API_KEY}&language=it-IT`;
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    const trailer = data.results.find(video =>
+      video.type === "Trailer" && video.site === "YouTube"
+    );
+    if (trailer) {
+      const trailerUrl = `https://www.youtube.com/embed/${trailer.key}`;
+      const container = document.getElementById("trailerContainer");
+      container.innerHTML = `
+        <iframe
+          src="${trailerUrl}"
+          title="Trailer"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>`;
+      container.style.display = "block";
+    }
+  } catch (error) {
+    console.error("Errore nel recupero trailer:", error);
+  }
+}
+
+
 
 export async function openPersona(id){
   const res = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${API_KEY}&language=it-IT&append_to_response=movie_credits,tv_credits`);

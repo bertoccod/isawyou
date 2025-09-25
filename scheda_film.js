@@ -1,5 +1,5 @@
 import { isSawed, addMovie, delMovie, updateMovieDates, getDates, getVoto, setVoto } from './dbops.js';
-import { openScheda, getProfilePhoto } from './tmdb.js';
+import { openScheda, getProfilePhoto, renderTrailer } from './tmdb.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdDwbIINAMKfNqDEbCYGIZSq_Q1k8VuGM",
@@ -48,6 +48,8 @@ let rating=0;
 document.getElementById("poster").src = `https://image.tmdb.org/t/p/w300${movieData.poster_path}`;
 document.getElementById("title").innerText = tipo=="movie" ? movieData.title : movieData.name;
 document.getElementById("overview").innerText = movieData.overview;
+await renderTrailer(movieId, tipo);
+
 
 const infoParts = [];
 
