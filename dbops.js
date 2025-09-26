@@ -186,7 +186,7 @@ function formattaData(data) {
 
 export async function getDataHome(){
    try {
-    const querySnapshot = await db.collection("film").get();
+    const querySnapshot = await db.collection("film").orderBy("data_fine","desc").get();
     return querySnapshot;
   } catch (error) {
     console.error("Errore nel recupero dei dati:", error);
