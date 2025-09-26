@@ -149,117 +149,6 @@ export async function getMyCollection(num){
   });
 }
 
-export async function getTopPersone(numAttori, numRegisti) {
-  const attoriMap = new Map();
-  const registiMap = new Map();
-
-  const querySnapshot = await db.collection("film").get();
-
-  querySnapshot.forEach(doc => {
-    const attori = doc.data().attori || [];
-    const registi = doc.data().registi || [];
-
-    attori.forEach(({ name, id }) => {
-      if (name && id) {
-        attoriMap.set(id, attoriMap.has(id)
-          ? { ...attoriMap.get(id), count: attoriMap.get(id).count + 1 }
-          : { nome: name, id, count: 1 });
-      }
-    });
-
-    registi.forEach(({ name, id }) => {
-      if (name && id) {
-        registiMap.set(id, registiMap.has(id)
-          ? { ...registiMap.get(id), count: registiMap.get(id).count + 1 }
-          : { nome: name, id, count: 1 });
-      }
-    });
-  });
-
-  const topAttori = Array.from(attoriMap.values())
-    .sort((a, b) => b.count - a.count)
-    .slice(0, numAttori);
-
-  const topRegisti = Array.from(registiMap.values())
-    .sort((a, b) => b.count - a.count)
-    .slice(0, numRegisti);
-  const top = {topAttori, topRegisti};
-  return top;
-}
-
-export async function getTotalMovie() {
-  try {
-    const querySnapshot = await db.collection("film").get();
-    const totale = querySnapshot.size;
-    console.log(`Totale film nel database: ${totale}`);
-    return totale;
-  } catch (error) {
-    console.error("Errore nel conteggio dei film:", error);
-    return null;
-  }
-}
-
-export async function getTopFlop() {
-  const topFilms = [];
-  const flopFilms = [];
-  try {
-    const querySnapshot = await db.collection("film").get();
-
-    querySnapshot.forEach(doc => {
-      const data = doc.data();
-      const voto = data.voto;
-      const titolo = data.title;
-      const tipo = data.tipo;
-      const numero = doc.id.split("_")[0];
-
-      if (voto === 5) {
-        topFilms.push({ numero, titolo, tipo });
-      } else if (voto === 1) {
-        flopFilms.push({ numero, titolo, tipo });
-      }
-    });
-    const top = {topFilms, flopFilms};
-    return top;
-  } catch (error) {
-    console.error("Errore nel recupero dei film:", error);
-    return { topFilms: [], flopFilms: [] };
-  }
-}
-
-export async function stats(){
-  try {
-    const querySnapshot = await db.collection("film").get();
-    const numRecord = querySnapshot.size;
-    let numMovie=0;
-    let numTv=0;
-    let vistiAnno=0;
-    let numStar={0:0, 1:0, 2:0, 3:0, 4:0, 5:0};
-    querySnapshot.forEach(doc=>{
-      const data = doc.data();
-      if (data.tipo==="movie"){numMovie++;} else {numTv++;}
-      if (data.data_fine){
-        const vistonel = data.data_fine.toDate?.();
-        const year = vistonel.getFullYear();
-        const oggi = new Date().getFullYear();
-        if (year==oggi){vistiAnno++;}
-      }
-      switch(data.voto){
-        case 0: numStar[0]++; break;
-        case 1: numStar[1]++; break;
-        case 2: numStar[2]++; break;
-        case 3: numStar[3]++; break;
-        case 4: numStar[4]++; break;
-        case 5: numStar[5]++; break;
-      }
-    });
-    let stats={numMovie, numTv, vistiAnno, numStar};
-    return stats;
-  } catch (error) {
-    console.error("Errore nelle statistiche:", error);
-    return null;
-  }
-}
-
 export async function esportaCSV() {
   const querySnapshot = await db.collection("film").orderBy("data_fine","desc").get();
   const dati = [];
@@ -293,4 +182,14 @@ function formattaData(data) {
   if (!data) return "";
   if (data.toDate) return data.toDate().toISOString().split("T")[0]; // Firestore Timestamp
   return new Date(data).toISOString().split("T")[0]; // JS Date
+}
+
+export async function getDataHome(){
+   try {
+    const querySnapshot = await db.collection("film").get();
+    return querySnapshot;
+  } catch (error) {
+    console.error("Errore nel recupero dei dati:", error);
+    return null;
+  }
 }

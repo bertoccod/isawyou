@@ -1,4 +1,4 @@
-import { getMyCollection, getTopPersone, getTotalMovie, getTopFlop, stats, esportaCSV} from './dbops.js';
+import { esportaCSV, getDataHome} from './dbops.js';
 import { getProfilePhoto, getMoviePoster } from './tmdb.js';
   
 const firebaseConfig = {
@@ -36,57 +36,92 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-//INTESTAZIONE CON NUMERO FILM
 const tot = document.getElementById("totalMovie");
-tot.textContent = `Hai registrato ${await getTotalMovie()} film`;
-
+let querySnapshot = await getDataHome();
+// NUMERO TOTALE DI FILM IN DB
+const totale = querySnapshot.size;
+tot.textContent = `Hai registrato ${totale} film`;
 //ULTIMI FILM VISTI
-getMyCollection(5);
+const resultsList = document.getElementById("results");
+resultsList.innerHTML = "";
+let count = 0;
+querySnapshot.forEach((doc) => {
+  if (count >= 5) return;
+    count++;
+  const data = doc.data();
+  const li = document.createElement("li");
+  li.setAttribute("data-keywords", data.keywords);
+  li.setAttribute("data-stars", String(data.voto));
+  li.setAttribute("data-type", data.tipo); // tipo è "movie" o "tv"
 
+  const IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
+  const imgSrc = data.poster_path ? `${IMAGE_BASE}${data.poster_path}` : "https://via.placeholder.com/300x450?text=No+Image";
+  const title = data.title;
+  const numero = doc.id.split("_")[0];
+  const tipo = doc.id.split("_")[1];
+  const linkHref = `scheda_film.html?id=${numero}&tipo=${tipo}`;
+  li.innerHTML = `
+  <a href="${linkHref}" style="text-decoration: none; color: inherit;">
+    <img src="${imgSrc}" alt="${title}"><br>
+    <span>${title}</span>
+  </a>`;
+  resultsList.appendChild(li);
+});
 //TOP PERSONE IN DB
 const ulAttori = document.getElementById("TopAttore");
 const ulRegisti = document.getElementById("TopRegista");
-const top = await getTopPersone(6, 6);
+const top = await getTopPersone(querySnapshot, 6, 6);
 const att = top.topAttori;
 const reg = top.topRegisti;
 
 renderTopPersone(att, ulAttori);
 renderTopPersone(reg, ulRegisti)
-
 //TOP E FLOP FILMS
 const ulTop = document.getElementById("5Stars");
 const ulFlop = document.getElementById("1Star");
-const topflop = await getTopFlop();
+const topflop = await getTopFlop(querySnapshot);
 const topFilm = topflop.topFilms;
 const flopFilm = topflop.flopFilms;
 renderTopFlop(topFilm, ulTop);
 renderTopFlop(flopFilm, ulFlop);
-
 //STATISTICHE
-statistiche();
+statistiche(querySnapshot);
 
-async function statistiche(){
-  try{
-    const statistiche = await stats();
-    const stat = document.getElementById("statistiche"); 
 
-      if (statistiche && stat) {
-        stat.innerHTML = `
-          Numero Film in collezione: ${statistiche.numMovie}<br>
-          Numero Serie TV in collezione: ${statistiche.numTv}<br>
-          Visti quest'anno: ${statistiche.vistiAnno}<br>
-          Distribuzione voti:<br>
-            ★☆☆☆☆: ${statistiche.numStar[1]}<br>
-            ★★☆☆☆: ${statistiche.numStar[2]}<br>
-            ★★★☆☆: ${statistiche.numStar[3]}<br>
-            ★★★★☆: ${statistiche.numStar[4]}<br>
-            ★★★★★: ${statistiche.numStar[5]}
-        `;
-      } else {
-        stat.textContent = "Errore nel caricamento delle statistiche.";
+async function getTopPersone(querySnapshot, numAttori, numRegisti) {
+  const attoriMap = new Map();
+  const registiMap = new Map();
+
+  querySnapshot.forEach(doc => {
+    const attori = doc.data().attori || [];
+    const registi = doc.data().registi || [];
+
+    attori.forEach(({ name, id }) => {
+      if (name && id) {
+        attoriMap.set(id, attoriMap.has(id)
+          ? { ...attoriMap.get(id), count: attoriMap.get(id).count + 1 }
+          : { nome: name, id, count: 1 });
       }
-  }
-  catch (error){}
+    });
+
+    registi.forEach(({ name, id }) => {
+      if (name && id) {
+        registiMap.set(id, registiMap.has(id)
+          ? { ...registiMap.get(id), count: registiMap.get(id).count + 1 }
+          : { nome: name, id, count: 1 });
+      }
+    });
+  });
+
+  const topAttori = Array.from(attoriMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, numAttori);
+
+  const topRegisti = Array.from(registiMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, numRegisti);
+  const top = {topAttori, topRegisti};
+  return top;
 }
 
 async function renderTopPersone(lista, ulElement) {
@@ -146,3 +181,71 @@ async function renderTopFlop(lista, ulElement) {
   }
 }
 
+async function getTopFlop(querySnapshot) {
+  const topFilms = [];
+  const flopFilms = [];
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+    const voto = data.voto;
+    const titolo = data.title;
+    const tipo = data.tipo;
+    const numero = doc.id.split("_")[0];
+
+    if (voto === 5) {
+      topFilms.push({ numero, titolo, tipo });
+    } else if (voto === 1) {
+      flopFilms.push({ numero, titolo, tipo });
+    }
+  });
+  const top = {topFilms, flopFilms};
+  return top;
+}
+
+async function statistiche(querySnapshot){
+  const statistiche = await stats(querySnapshot);
+  const stat = document.getElementById("statistiche"); 
+
+    if (statistiche && stat) {
+      stat.innerHTML = `
+        Numero Film in collezione: ${statistiche.numMovie}<br>
+        Numero Serie TV in collezione: ${statistiche.numTv}<br>
+        Visti quest'anno: ${statistiche.vistiAnno}<br>
+        Distribuzione voti:<br>
+          ★☆☆☆☆: ${statistiche.numStar[1]}<br>
+          ★★☆☆☆: ${statistiche.numStar[2]}<br>
+          ★★★☆☆: ${statistiche.numStar[3]}<br>
+          ★★★★☆: ${statistiche.numStar[4]}<br>
+          ★★★★★: ${statistiche.numStar[5]}
+      `;
+    } else {
+      stat.textContent = "Errore nel caricamento delle statistiche.";
+    }
+}
+
+async function stats(querySnapshot){
+  const numRecord = querySnapshot.size;
+  let numMovie=0;
+  let numTv=0;
+  let vistiAnno=0;
+  let numStar={0:0, 1:0, 2:0, 3:0, 4:0, 5:0};
+  querySnapshot.forEach(doc=>{
+    const data = doc.data();
+    if (data.tipo==="movie"){numMovie++;} else {numTv++;}
+    if (data.data_fine){
+      const vistonel = data.data_fine.toDate?.();
+      const year = vistonel.getFullYear();
+      const oggi = new Date().getFullYear();
+      if (year==oggi){vistiAnno++;}
+    }
+    switch(data.voto){
+      case 0: numStar[0]++; break;
+      case 1: numStar[1]++; break;
+      case 2: numStar[2]++; break;
+      case 3: numStar[3]++; break;
+      case 4: numStar[4]++; break;
+      case 5: numStar[5]++; break;
+    }
+  });
+  let stats={numMovie, numTv, vistiAnno, numStar};
+  return stats;
+}
