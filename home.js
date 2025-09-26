@@ -104,7 +104,7 @@ async function renderTopPersone(lista, ulElement) {
     }
 
     const span = document.createElement("span");
-    span.textContent = `${persona.nome} ${persona.count} volte`;
+    span.innerHTML = `${persona.nome}<br>${persona.count} titoli`;
     /*
     span.style.display = "block";
     span.style.textAlign = "center";
@@ -134,7 +134,7 @@ async function renderTopFlop(lista, ulElement) {
   for (const film of lista) {
     const img = document.createElement("img");
     img.alt = film.titolo;
-    /*
+    /* 
     img.width = 100;
     img.height = 150;*/
 
@@ -146,6 +146,7 @@ async function renderTopFlop(lista, ulElement) {
     }
 
     const span = document.createElement("span");
+    span.classList.add("titolo-film");
     span.textContent = `${film.titolo}`;
     /*
     span.style.display = "block";

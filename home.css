@@ -47,13 +47,15 @@ body.home {
 }
 
 .section {
+  width: 85%;
   background-color: var(--input-bg);
+  margin: 1rem auto 2rem; /* centrato */
   border: 1px solid var(--input-border);
   border-radius: 12px;
   padding: 1rem;
-  margin-bottom: 2rem;
   box-shadow: 0 0 6px var(--shadow-glow);
 }
+
 .scroll-wrapper {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -80,7 +82,7 @@ h1 {
 h2 {
   color: var(--color-accent);
   font-size: 1.8rem;
-  margin: 1.5rem 0 0.5rem;
+  margin: 1.5rem 0 1.5rem;
 }
 #totalMovie {
   text-align: center;
@@ -129,6 +131,17 @@ a {
   text-decoration: none;
   color: inherit;
 }
+.titolo-film {
+  font-size: 1.4rem;
+  text-align: center;
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 @media (max-width: 600px) {
   .scroll-wrapper ul {
