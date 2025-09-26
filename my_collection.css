@@ -105,3 +105,33 @@ body.mycollection {
   border: 1px solid var(--input-border);
   font-size: 1.2rem;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  body.mycollection {padding: 10px;}
+
+  .search-input {
+    margin: 1rem auto 1rem auto;
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+  .grid-list {gap: 0.5rem;}
+
+  .grid-list li {
+    flex: 0 0 calc(20% - 1.5rem);
+    max-width: calc(20% - 1.5rem);
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 20px;}
+  .filters {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .type-filters {
+    gap: 0.5rem;
+  }
+  .filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  .rating-filter select {font-size: 1rem;} 
+}

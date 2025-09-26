@@ -77,3 +77,19 @@ body.searchpage {
   max-width: calc(33.33% - 1rem);
   font-size: 1.5rem;
 }
+@media (hover: hover) and (pointer: fine) {
+  body.searchpage {
+  padding: 10px;
+  margin-top:1em;
+}
+.search-input {
+  font-size: 1.3rem;
+}
+
+
+.grid-list li {
+  flex: 0 0 calc(20% - 1rem); /* 3 locandine visibili */
+  max-width: calc(20% - 1rem);
+  font-size: 1.2rem;
+}
+}

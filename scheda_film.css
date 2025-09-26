@@ -227,3 +227,38 @@ button:hover {
   border: none;
   border-radius: 20px;
 }
+@media (hover: hover) and (pointer: fine) {
+  body {
+  padding: 20px;
+  margin-top: 3rem;
+  margin-bottom: 60px;
+}
+.film-card {
+  padding: 2rem;
+  max-width: 80%;
+}
+
+.film-card img {
+  width: 20%;
+  max-width: 500px;
+}
+
+.film-card span {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+#filmInfoCompact {font-size: 1.5rem;}
+
+#filmCountries {font-size: 1.4rem;}
+
+li {
+  flex: 0 0 calc(16% - 1rem); 
+  max-width: calc(16% - 1rem);
+}
+
+.star {font-size: 2rem !important;}
+
+button {font-size: 2.5rem;}
+
+}

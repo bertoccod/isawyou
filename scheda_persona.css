@@ -50,16 +50,7 @@ body.scheda-persona {
   display: block;
   margin: 0 auto 1rem;
 }
-/*
-#profilo {
-  width: 200px;
-  height: 300px;
-  border-radius: 8px;
-  box-shadow: 0 0 6px var(--shadow-glow);
-  display: block;
-  margin: 0 auto 1rem;
-}
-*/
+
 h1 {
     text-align: center;
     font-size: 3rem;
@@ -171,4 +162,44 @@ h2 {
 .film-table td .sezione-titolo {
   color: #0B1D1A !important;
   vertical-align: middle;
+}
+@media (hover: hover) and (pointer: fine) {
+  body.scheda-persona {
+  padding: 5px;
+}
+
+
+.film-card {
+  padding: 0 30rem 0 30rem;  
+  max-width: 30vh;
+}
+
+h1 {
+    font-size:2.3rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+#personInfoCompact {
+  font-size: 1.2rem;
+}
+
+.film-table .titolo a {
+  font-size: 1.4rem;
+}
+.film-table .anno {
+  font-size: 1.2rem;
+}
+
+.film-table .personaggio,
+.film-table .ruolo,
+.film-table .episodi {
+  font-size: 1.2rem;
+}
+
+.film-table .sezione-titolo {
+  font-size: 2rem;
+}
 }
