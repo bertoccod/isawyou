@@ -68,7 +68,7 @@ statistiche();
 async function statistiche(){
   try{
     const statistiche = await stats();
-    const stat = document.getElementById("statistiche"); // Assicurati che l'elemento esista
+    const stat = document.getElementById("statistiche"); 
 
       if (statistiche && stat) {
         stat.innerHTML = `
@@ -93,9 +93,6 @@ async function renderTopPersone(lista, ulElement) {
   for (const persona of lista) {
     const img = document.createElement("img");
     img.alt = persona.nome;
-    /*
-    img.width = 100;
-    img.height = 150;*/
 
     try {
       img.src = await getProfilePhoto(persona.id);
@@ -105,39 +102,25 @@ async function renderTopPersone(lista, ulElement) {
 
     const span = document.createElement("span");
     span.innerHTML = `${persona.nome}<br>${persona.count} titoli`;
-    /*
-    span.style.display = "block";
-    span.style.textAlign = "center";
-    span.style.marginTop = "0.5rem";
-    span.style.color = "white";*/
 
     const link = document.createElement("a");
     link.href = `scheda_persona.html?id=${persona.id}`;
-    /*
-    link.style.textDecoration = "none";
-    link.style.color = "inherit";*/
 
     link.appendChild(img);
     link.appendChild(span);
 
     const li = document.createElement("li");
-    /*
-    li.style.listStyle = "none";
-    li.style.textAlign = "center";*/
 
     li.appendChild(link);
 
     ulElement.appendChild(li);
   }
 }
+
 async function renderTopFlop(lista, ulElement) {
   for (const film of lista) {
     const img = document.createElement("img");
     img.alt = film.titolo;
-    /* 
-    img.width = 100;
-    img.height = 150;*/
-
     
     try {
       img.src = await getMoviePoster(film.numero, film.tipo);
@@ -148,25 +131,15 @@ async function renderTopFlop(lista, ulElement) {
     const span = document.createElement("span");
     span.classList.add("titolo-film");
     span.textContent = `${film.titolo}`;
-    /*
-    span.style.display = "block";
-    span.style.textAlign = "center";
-    span.style.marginTop = "0.5rem";
-    span.style.color = "white";*/
 
     const link = document.createElement("a");
     link.href = `scheda_film.html?id=${film.numero}&tipo=${film.tipo}`;
-    /*
-    link.style.textDecoration = "none";
-    link.style.color = "inherit";*/
 
     link.appendChild(img);
     link.appendChild(span);
 
     const li = document.createElement("li");
-    /*
-    li.style.listStyle = "none";
-    li.style.textAlign = "center";*/
+
     li.appendChild(link);
 
     ulElement.appendChild(li);

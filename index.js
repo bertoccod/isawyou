@@ -10,6 +10,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
+console.log('✅ index.js caricato');
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registrato:', reg))
+      .catch(err => console.error('Errore nella registrazione:', err));
+  });
+}
+
+
 
 //Login
 function login(){

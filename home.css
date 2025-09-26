@@ -20,6 +20,7 @@
   --font-size-base: 16px;
   --font-size-title: 72px;
 }
+
 body.home {
   background-color: var(--color-bg);
   color: var(--color-text);
@@ -40,8 +41,8 @@ body.home {
 }
 
 #logo {
-  max-width: 250px; /* Limita la larghezza */
-  height: auto;     /* Mantiene proporzioni */
+  max-width: 250px;
+  height: auto;    
   margin-bottom: 0.5rem;
   display: inline-block;
 }
@@ -49,7 +50,7 @@ body.home {
 .section {
   width: 85%;
   background-color: var(--input-bg);
-  margin: 1rem auto 2rem; /* centrato */
+  margin: 1rem auto 2rem;
   border: 1px solid var(--input-border);
   border-radius: 12px;
   padding: 1rem;
@@ -111,7 +112,7 @@ h2 {
 
 li {
   text-align: center;
-  flex: 0 0 calc(33.33% - 1rem); /* 3 locandine visibili */
+  flex: 0 0 calc(33.33% - 1rem);
   max-width: calc(33.33% - 1rem);
 }
 
@@ -142,7 +143,7 @@ a {
   text-overflow: ellipsis;
 }
 
-
+/*
 @media (max-width: 600px) {
   .scroll-wrapper ul {
     gap: 0.5rem;
@@ -156,7 +157,7 @@ a {
   li span {
     font-size: 0.9rem;
   }
-}
+}*/
 
 #statistiche {
   background-color: var(--input-bg);
