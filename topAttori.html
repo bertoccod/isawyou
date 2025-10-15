@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>I Saw You - Top Attori</title>
+  <link rel="stylesheet" href="topAttori.css">
+  <!-- Firebase SDK compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body class="topAttori">
+  <div id="titleContainer">
+    <h1>I TOP ATTORI</h1>
+    <h2>1 punto a film, 0.25 a puntata di serie TV</h2>
+  </div>
+  <div class ="section">
+    <ul id="results" class="grid-list"></ul>
+  </div>
+  <div id="navbar-placeholder"></div>
+  <script>
+    fetch("navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+      });
+  </script>
+  <script type="module" src="tmdb.js"></script>
+  <script type="module" src="topAttori.js"></script>
+</body>
+</html>

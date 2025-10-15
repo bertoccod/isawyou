@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 const tot = document.getElementById("totalMovie");
 let querySnapshot = await getDataHome();
 // NUMERO TOTALE DI FILM IN DB
@@ -73,9 +72,13 @@ const ulRegisti = document.getElementById("TopRegista");
 const top = await getTopPersone(querySnapshot, 6, 6);
 const att = top.topAttori;
 const reg = top.topRegisti;
-
-renderTopPersone(att, ulAttori);
+const sliceAtt = att.slice(0,6);
+renderTopPersone(sliceAtt, ulAttori);
 renderTopPersone(reg, ulRegisti)
+//SCRIVO ATTORI IN JSON BROWSER PER ESPANSIONE
+const attoriFiltrati = att.filter(attore => attore.count > 3);
+const attoriJSON = JSON.stringify(attoriFiltrati);
+localStorage.setItem('tuttiGliAttori',attoriJSON);
 //TOP E FLOP FILMS
 const ulTop = document.getElementById("5Stars");
 const ulFlop = document.getElementById("1Star");
@@ -106,7 +109,7 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
     */
    attori.forEach(({ name, id, numVisto }) => {
     const nVisto =(typeof numVisto=== 'number' && numVisto>0) ? numVisto: 1;
-    const valore = (nVisto===1) ? 1: nVisto /2;
+    const valore = (nVisto === 1) ? 1 : nVisto * 0.25;
   if (name && id) {
     if (attoriMap.has(id)){
       const current = attoriMap.get(id);
@@ -136,7 +139,7 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
 
   const topAttori = Array.from(attoriMap.values())
     .sort((a, b) => b.count - a.count)
-    .slice(0, numAttori);
+    //.slice(0, numAttori);
 
   const topRegisti = Array.from(registiMap.values())
     .sort((a, b) => b.count - a.count)
@@ -147,29 +150,29 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
 
 async function renderTopPersone(lista, ulElement) {
   for (const persona of lista) {
-    const img = document.createElement("img");
-    img.alt = persona.nome;
+      const img = document.createElement("img");
+      img.alt = persona.nome;
 
-    try {
-      img.src = await getProfilePhoto(persona.id);
-    } catch {
-      img.src = "./assets/noPhoto.png";
-    }
+      try {
+        img.src = await getProfilePhoto(persona.id);
+      } catch {
+        img.src = "./assets/noPhoto.png";
+      }
 
-    const span = document.createElement("span");
-    span.innerHTML = `${persona.nome}<br>${persona.count} titoli`;
+      const span = document.createElement("span");
+      span.innerHTML = `${persona.nome}<br>${persona.count} titoli`;
 
-    const link = document.createElement("a");
-    link.href = `scheda_persona.html?id=${persona.id}`;
+      const link = document.createElement("a");
+      link.href = `scheda_persona.html?id=${persona.id}`;
 
-    link.appendChild(img);
-    link.appendChild(span);
+      link.appendChild(img);
+      link.appendChild(span);
 
-    const li = document.createElement("li");
+      const li = document.createElement("li");
 
-    li.appendChild(link);
+      li.appendChild(link);
 
-    ulElement.appendChild(li);
+      ulElement.appendChild(li);
   }
 }
 
