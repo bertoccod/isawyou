@@ -95,14 +95,32 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
   querySnapshot.forEach(doc => {
     const attori = doc.data().attori || [];
     const registi = doc.data().registi || [];
-
-    attori.forEach(({ name, id }) => {
+/*
+    attori.forEach(({ name, id, numVisto }) => {
       if (name && id) {
         attoriMap.set(id, attoriMap.has(id)
           ? { ...attoriMap.get(id), count: attoriMap.get(id).count + 1 }
           : { nome: name, id, count: 1 });
       }
     });
+    */
+   attori.forEach(({ name, id, numVisto }) => {
+  if (name && id) {
+    const valore = numVisto === 1 ? 1 : numVisto / 2;
+
+    attoriMap.set(id, attoriMap.has(id)
+      ? {
+          ...attoriMap.get(id),
+          count: attoriMap.get(id).count + valore
+        }
+      : {
+          nome: name,
+          id,
+          count: valore
+        });
+  }
+});
+
 
     registi.forEach(({ name, id }) => {
       if (name && id) {

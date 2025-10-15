@@ -68,14 +68,28 @@ export async function openScheda(id, tipo){
         name: regista.name
       }));
   }
-  
-  const attoriPrincipali = data.credits.cast
-    .slice(0, 10) // prende i primi 10
-    .map(attore => ({
-      id: attore.id,
-      name: attore.name
-    }));
-    return {data, registi, attoriPrincipali}
+  if (tipo=="movie"){
+    const attoriPrincipali = data.credits.cast
+      .slice(0, 10) // prende i primi 10
+      .map(attore => ({
+        id: attore.id,
+        name: attore.name,
+        numVisto: 1
+      }));
+      return {data, registi, attoriPrincipali}
+  } else {
+    const attoriPrincipali = await Promise.all(
+      data.credits.cast.slice(0, 10).map(async attore => {
+        const episodeCount = await countEpisodes(attore.id, id);
+        return {
+          id: attore.id,
+          name: attore.name,
+          numVisto: episodeCount
+        };
+      })
+   );
+   return { data, registi, attoriPrincipali};
+  }
 }
 export async function renderTrailer(id, tipo) {
   const endpoint = `https://api.themoviedb.org/3/${tipo}/${id}/videos?api_key=${API_KEY}&language=it-IT`;
@@ -132,4 +146,19 @@ export async function getMoviePoster(id, tipo) {
 
   return `${IMAGE_BASE}/${data.poster_path}`;
 }
+
+export async function countEpisodes(idAttore, idSerie) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${idAttore}/tv_credits?api_key=${API_KEY}&language=it-IT`);
+  console.log (`https://api.themoviedb.org/3/person/${idAttore}/tv_credits?api_key=${API_KEY}&language=it-IT`);
+  const data = await res.json();
+
+  const match = data.cast.find(serie => Number(serie.id) === Number(idSerie));
+  if (!match) {
+  console.warn(`Attore ${idAttore} non trovato nella serie ${idSerie}`);
+} else {
+  console.log(`Attore ${idAttore} → ${match.name} → Episodi: ${match.episode_count}`);
+}
+  return match?.episode_count ?? 0;
+}
+
 
