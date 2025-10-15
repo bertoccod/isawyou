@@ -105,19 +105,22 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
     });
     */
    attori.forEach(({ name, id, numVisto }) => {
+    const nVisto =(typeof numVisto=== 'number' && numVisto>0) ? numVisto: 1;
+    const valore = (nVisto===1) ? 1: nVisto /2;
   if (name && id) {
-    const valore = numVisto === 1 ? 1 : numVisto / 2;
-
-    attoriMap.set(id, attoriMap.has(id)
-      ? {
-          ...attoriMap.get(id),
-          count: attoriMap.get(id).count + valore
-        }
-      : {
-          nome: name,
-          id,
-          count: valore
-        });
+    if (attoriMap.has(id)){
+      const current = attoriMap.get(id);
+      attoriMap.set(id, {
+        ...current,
+        count: current.count + valore
+      });
+    } else {
+      attoriMap.set(id,{
+        nome: name,
+        id: id,
+        count: valore
+      });
+    }
   }
 });
 
