@@ -161,7 +161,7 @@ async function renderTopPersone(lista, ulElement) {
       }
 
       const span = document.createElement("span");
-      span.innerHTML = `${persona.nome}<br>${persona.count} titoli`;
+      span.innerHTML = `${persona.nome}<br>${persona.count.toFixed(2)} punti`;
 
       const link = document.createElement("a");
       link.href = `scheda_persona.html?id=${persona.id}`;
