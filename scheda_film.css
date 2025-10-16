@@ -239,8 +239,9 @@ button:hover {
 }
 
 .film-card img {
-  width: 20%;
+  width: 60%;
   max-width: 500px;
+  border-radius: 10px;
 }
 
 .film-card span {
