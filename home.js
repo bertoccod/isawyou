@@ -109,7 +109,8 @@ async function getTopPersone(querySnapshot, numAttori, numRegisti) {
     */
    attori.forEach(({ name, id, numVisto }) => {
     const nVisto =(typeof numVisto=== 'number' && numVisto>0) ? numVisto: 1;
-    const valore = (nVisto === 1) ? 1 : Math.log(nVisto+1) / Math.log(10);
+    //const valore = (nVisto === 1) ? 1 : Math.log(nVisto+1) / Math.log(10);
+    const valore = Math.log(nVisto+1) / Math.log(10);
   if (name && id) {
     if (attoriMap.has(id)){
       const current = attoriMap.get(id);
