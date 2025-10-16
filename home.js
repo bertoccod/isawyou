@@ -76,7 +76,7 @@ const sliceAtt = att.slice(0,6);
 renderTopPersone(sliceAtt, ulAttori);
 renderTopPersone(reg, ulRegisti)
 //SCRIVO ATTORI IN JSON BROWSER PER ESPANSIONE
-const attoriFiltrati = att.filter(attore => attore.count > 3);
+const attoriFiltrati = att.filter(attore => attore.count > 1);
 const attoriJSON = JSON.stringify(attoriFiltrati);
 localStorage.setItem('tuttiGliAttori',attoriJSON);
 //TOP E FLOP FILMS
