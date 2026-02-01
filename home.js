@@ -235,6 +235,7 @@ async function statistiche(querySnapshot){
         Numero Film in collezione: ${statistiche.numMovie}<br>
         Numero Serie TV in collezione: ${statistiche.numTv}<br>
         Visti quest'anno: ${statistiche.vistiAnno}<br>
+	Visti scorso anno: ${statistiche.vistiAnnoPrec}<br>
         Distribuzione voti:<br>
           ★☆☆☆☆: ${statistiche.numStar[1]}<br>
           ★★☆☆☆: ${statistiche.numStar[2]}<br>
@@ -252,6 +253,7 @@ async function stats(querySnapshot){
   let numMovie=0;
   let numTv=0;
   let vistiAnno=0;
+  let vistiAnnoPrec=0;
   let numStar={0:0, 1:0, 2:0, 3:0, 4:0, 5:0};
   querySnapshot.forEach(doc=>{
     const data = doc.data();
@@ -261,6 +263,7 @@ async function stats(querySnapshot){
       const year = vistonel.getFullYear();
       const oggi = new Date().getFullYear();
       if (year==oggi){vistiAnno++;}
+      if (year==oggi-1){vistiAnnoPrec++;}
     }
     switch(data.voto){
       case 0: numStar[0]++; break;
@@ -271,6 +274,6 @@ async function stats(querySnapshot){
       case 5: numStar[5]++; break;
     }
   });
-  let stats={numMovie, numTv, vistiAnno, numStar};
+  let stats={numMovie, numTv, vistiAnno, vistiAnnoPrec, numStar};
   return stats;
 }
