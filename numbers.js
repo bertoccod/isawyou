@@ -26,7 +26,7 @@ let statistiche = await stats(querySnapshot, 0);
 const stat = document.getElementById("Total"); 
 
 if (statistiche && stat) {
-  const totalElementi = statistiche.numMovie+statistiche.numTv;
+  let totalElementi = statistiche.numMovie+statistiche.numTv;
   stat.innerHTML = `
     <li>Totale Elementi: ${totalElementi}</li>
     <li>Numero Film in collezione: ${statistiche.numMovie}</li>
@@ -43,11 +43,13 @@ if (statistiche && stat) {
   while (proseguo){
     console.log("Proseguo= "+proseguo);
     statistiche = await stats(querySnapshot, anno);
-    if (statistiche){
+    totalElementi = statistiche.numMovie+statistiche.numTv;
+    if (totalElementi>0){
       const divAnni = document.getElementById("anni");
       console.log("sono in statistiche");
       divAnni.innerHTML = `
         <h2>Statistiche ${anno}</h2>
+	Totale Elementi: ${totalElementi};
         Numero Film in collezione: ${statistiche.numMovie}<br>
         Numero Serie TV in collezione: ${statistiche.numTv}<br>
         Distribuzione voti:<br>
