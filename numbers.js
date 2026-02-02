@@ -23,20 +23,23 @@ let querySnapshot = await getDataHome();
 
 //GLOBALI
 let statistiche = await stats(querySnapshot, 0);
-const stat = document.getElementById("Total"); 
+const stat = document.getElementById("global"); 
 
 if (statistiche && stat) {
   let totalElementi = statistiche.numMovie+statistiche.numTv;
   stat.innerHTML = `
-    <li>Totale Elementi: ${totalElementi}</li>
-    <li>Numero Film in collezione: ${statistiche.numMovie}</li>
-    <li>Numero Serie TV in collezione: ${statistiche.numTv}</li>
-    <li>Distribuzione voti:</li>
-    <li>★☆☆☆☆: ${statistiche.numStar[1]}</li>
-    <li>★★☆☆☆: ${statistiche.numStar[2]}</li>
-    <li>★★★☆☆: ${statistiche.numStar[3]}</li>
-    <li>★★★★☆: ${statistiche.numStar[4]}</li>
-    <li>★★★★★: ${statistiche.numStar[5]}</li>
+    <div class="section">
+    <h2>Statistiche Totali</h2>
+    Totale Elementi: ${totalElementi}</li>
+    Numero Film in collezione: ${statistiche.numMovie}</li>
+    Numero Serie TV in collezione: ${statistiche.numTv}</li>
+    Distribuzione voti:</li>
+    ★☆☆☆☆: ${statistiche.numStar[1]}<br>
+    ★★☆☆☆: ${statistiche.numStar[2]}<br>
+    ★★★☆☆: ${statistiche.numStar[3]}<br>
+    ★★★★☆: ${statistiche.numStar[4]}<br>
+    ★★★★★: ${statistiche.numStar[5]}<br>
+    </div>
   `;
   let anno = new Date().getFullYear();
   let proseguo=true;
@@ -45,9 +48,9 @@ if (statistiche && stat) {
     statistiche = await stats(querySnapshot, anno);
     totalElementi = statistiche.numMovie+statistiche.numTv;
     if (totalElementi>0){
-      const divAnni = document.getElementById("anni");
       console.log("sono in statistiche");
-      divAnni.innerHTML += `
+      stat.innerHTML += `
+        <div class="section">
         <h2>Statistiche ${anno}</h2>
 	Totale Elementi: ${totalElementi};<br>
         Numero Film in collezione: ${statistiche.numMovie}<br>
@@ -58,6 +61,7 @@ if (statistiche && stat) {
         ★★★☆☆: ${statistiche.numStar[3]}<br>
         ★★★★☆: ${statistiche.numStar[4]}<br>
         ★★★★★: ${statistiche.numStar[5]}<br>
+        </div>
       `;
       anno--;
 console.log("Anno vale= "+anno);
