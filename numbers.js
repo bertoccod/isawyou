@@ -47,18 +47,20 @@ async function stats(querySnapshot, refYear){
   let numStar={0:0, 1:0, 2:0, 3:0, 4:0, 5:0};
   querySnapshot.forEach(doc=>{
     const data = doc.data();
-    const vistonel = data.data_fine.toDate?.();
-    const year = vistonel.getFullYear();
-    if ((year ==refYear) || (year==0)){
-      if (data.tipo==="movie"){numMovie++;} else {numTv++;}
-      vistiAnno++;
-      switch(data.voto){
-        case 0: numStar[0]++; break;
-        case 1: numStar[1]++; break;
-        case 2: numStar[2]++; break;
-        case 3: numStar[3]++; break;
-        case 4: numStar[4]++; break;
-        case 5: numStar[5]++; break;
+    if (data.data_fine){
+      const vistonel = data.data_fine.toDate?.();
+      const year = vistonel.getFullYear();
+      if ((year ==refYear) || (year==0)){
+        if (data.tipo==="movie"){numMovie++;} else {numTv++;}
+        vistiAnno++;
+        switch(data.voto){
+          case 0: numStar[0]++; break;
+          case 1: numStar[1]++; break;
+          case 2: numStar[2]++; break;
+          case 3: numStar[3]++; break;
+          case 4: numStar[4]++; break;
+          case 5: numStar[5]++; break;
+        }
       }
     }
   });
