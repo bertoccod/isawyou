@@ -38,7 +38,7 @@ if (statistiche && stat) {
     <li>★★★★☆: ${statistiche.numStar[4]}</li>
     <li>★★★★★: ${statistiche.numStar[5]}</li>
   `;
-  anno = new Date().getFullYear();
+  let anno = new Date().getFullYear();
   let proseguo=true;
   while (proseguo){
     statistiche(querySnapshot, anno);
