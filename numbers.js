@@ -30,10 +30,10 @@ if (statistiche && stat) {
   stat.innerHTML = `
     <div class="section">
     <h2>Statistiche Totali</h2>
-    Totale Elementi: ${totalElementi}</li>
-    Numero Film in collezione: ${statistiche.numMovie}</li>
-    Numero Serie TV in collezione: ${statistiche.numTv}</li>
-    Distribuzione voti:</li>
+    Totale Elementi: ${totalElementi}<br>
+    Numero Film in collezione: ${statistiche.numMovie}<br>
+    Numero Serie TV in collezione: ${statistiche.numTv}<br>
+    Distribuzione voti:<br>
     ★☆☆☆☆: ${statistiche.numStar[1]}<br>
     ★★☆☆☆: ${statistiche.numStar[2]}<br>
     ★★★☆☆: ${statistiche.numStar[3]}<br>
@@ -52,7 +52,7 @@ if (statistiche && stat) {
       stat.innerHTML += `
         <div class="section">
         <h2>Statistiche ${anno}</h2>
-	Totale Elementi: ${totalElementi};<br>
+	Totale Elementi: ${totalElementi}<br>
         Numero Film in collezione: ${statistiche.numMovie}<br>
         Numero Serie TV in collezione: ${statistiche.numTv}<br>
         Distribuzione voti:<br>
@@ -95,6 +95,8 @@ async function stats(querySnapshot, refYear){
           case 4: numStar[4]++; break;
           case 5: numStar[5]++; break;
         }
+      //GESTIONE ATTORI
+
       }
     }
   });
