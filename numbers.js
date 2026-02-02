@@ -49,7 +49,7 @@ async function stats(querySnapshot, refYear){
     const data = doc.data();
     const vistonel = data.data_fine.toDate?.();
     const year = vistonel.getFullYear();
-    if (year ==refYear) || (year==0){
+    if ((year ==refYear) || (year==0)){
       if (data.tipo==="movie"){numMovie++;} else {numTv++;}
       vistiAnno++;
       switch(data.voto){
