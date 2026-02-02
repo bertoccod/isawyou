@@ -47,9 +47,9 @@ if (statistiche && stat) {
     if (totalElementi>0){
       const divAnni = document.getElementById("anni");
       console.log("sono in statistiche");
-      divAnni.innerHTML = `
+      divAnni.innerHTML += `
         <h2>Statistiche ${anno}</h2>
-	Totale Elementi: ${totalElementi};
+	Totale Elementi: ${totalElementi};<br>
         Numero Film in collezione: ${statistiche.numMovie}<br>
         Numero Serie TV in collezione: ${statistiche.numTv}<br>
         Distribuzione voti:<br>
