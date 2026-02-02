@@ -41,7 +41,7 @@ if (statistiche && stat) {
   let anno = new Date().getFullYear();
   let proseguo=true;
   while (proseguo){
-    statistiche(querySnapshot, anno);
+    statistiche = await stats(querySnapshot, anno);
     if (statistiche){
       const divAnni = documento.getElementById("anni");
       divAnni.innerHTML = `
