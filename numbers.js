@@ -23,18 +23,18 @@ let querySnapshot = await getDataHome();
 
 //GLOBALI
 let statistiche = await stats(querySnapshot, 0);
-const stat = document.getElementById("total"); 
+const stat = document.getElementById("Total"); 
 
 if (statistiche && stat) {
   stat.innerHTML = `
-    Numero Film in collezione: ${statistiche.numMovie}<br>
-    Numero Serie TV in collezione: ${statistiche.numTv}<br>
-    Distribuzione voti:<br>
-    ?????: ${statistiche.numStar[1]}<br>
-    ?????: ${statistiche.numStar[2]}<br>
-    ?????: ${statistiche.numStar[3]}<br>
-    ?????: ${statistiche.numStar[4]}<br>
-    ?????: ${statistiche.numStar[5]}
+    <li>Numero Film in collezione: ${statistiche.numMovie}</li>
+    <li>Numero Serie TV in collezione: ${statistiche.numTv}</li>
+    <li>Distribuzione voti:</li>
+    <li>?????: ${statistiche.numStar[1]}</li>
+    <li>?????: ${statistiche.numStar[2]}</li>
+    <li>?????: ${statistiche.numStar[3]}</li>
+    <li>?????: ${statistiche.numStar[4]}</li>
+    <li>?????: ${statistiche.numStar[5]}</li>
   `;
 } else {
   stat.textContent = "Errore nel caricamento delle statistiche.";
