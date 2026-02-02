@@ -41,12 +41,13 @@ if (statistiche && stat) {
   let anno = new Date().getFullYear();
   let proseguo=true;
   while (proseguo){
+    console.log("Proseguo= "+proseguo);
     statistiche = await stats(querySnapshot, anno);
     if (statistiche){
       const divAnni = document.getElementById("anni");
+      console.log("sono in statistiche");
       divAnni.innerHTML = `
         <h2>Statistiche ${anno}</h2>
-        Totale Elementi: ${totalElementi}<br>
         Numero Film in collezione: ${statistiche.numMovie}<br>
         Numero Serie TV in collezione: ${statistiche.numTv}<br>
         Distribuzione voti:<br>
@@ -57,7 +58,9 @@ if (statistiche && stat) {
         ★★★★★: ${statistiche.numStar[5]}<br>
       `;
       anno--;
+console.log("Anno vale= "+anno);
     } else {
+console.log("imposto proseguo a falso");
       proseguo=false;
     }
   }
