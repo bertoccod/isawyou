@@ -43,7 +43,7 @@ if (statistiche && stat) {
   while (proseguo){
     statistiche = await stats(querySnapshot, anno);
     if (statistiche){
-      const divAnni = documento.getElementById("anni");
+      const divAnni = document.getElementById("anni");
       divAnni.innerHTML = `
         <h2>Statistiche ${anno}</h2>
         Totale Elementi: ${totalElementi}<br>
