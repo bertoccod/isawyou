@@ -55,9 +55,20 @@ body.home {
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 0 6px var(--shadow-glow);
+  text-align: center;
 }
 
 .scroll-wrapper {
+    width: 85%;
+  background-color: var(--input-bg);
+  margin: 1rem auto 2rem;
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 6px var(--shadow-glow);
+  text-align: center;
+
+
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -67,12 +78,11 @@ body.home {
   flex-wrap: nowrap;
   gap: 1rem;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   list-style: none;
+  justify-content: center;
 }
-.scroll-wrapper ul li {
-  scroll-snap-align: start;
-}
+
 h1 {
   text-align: center;
   font-size: var(--font-size-title);
@@ -92,24 +102,6 @@ h2 {
   margin-bottom: 1rem;
 }
 
-#scarica-csv {
-  display: block;
-  margin: 0 auto 1rem;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 36px;
-  box-shadow: 0 0 8px var(--shadow-glow);
-  transition: background-color 0.3s ease;
-}
-#scarica-csv:hover {
-  background-color: #00cc77;
-}
-
 
 li {
   text-align: center;
@@ -118,7 +110,7 @@ li {
 }
 
 li img {
-  width: 100%;
+  width: 44%;
   height: auto;
 }
 
