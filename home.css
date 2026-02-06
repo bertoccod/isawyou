@@ -154,14 +154,16 @@ h1 {
 
 .scroll-wrapper ul li {
   scroll-snap-align: start;
-  flex: 0 0 120px; /* dimensione card mobile */
-  max-width: 120px;
+  flex: 0 0 32vw; /* dimensione card mobile */
+  max-width: 180px;
   text-align: center;
 }
 
 .scroll-wrapper ul li img {
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: 0.3s ease;
 }
 
