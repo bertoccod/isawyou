@@ -110,6 +110,8 @@ h1 {
   margin-bottom: 1.5rem;
   box-shadow: 0 0 10px var(--shadow-glow);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: 85%;
+  box-sizing: border-box;
 }
 .section:hover {
   transform: translateY(-4px);
