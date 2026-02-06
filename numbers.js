@@ -19,7 +19,6 @@ auth.onAuthStateChanged((user) => {
     window.location.href = "index.html";
   }
 });
-const tot = document.getElementById("totalMovie");
 let querySnapshot = await getDataHome();
 
 //GLOBALI
@@ -118,6 +117,8 @@ if (statistiche && stat) {
 }
 
 async function stats(querySnapshot, refYear){
+  let id=0;
+  let tipo="";
   let numMovie = 0;
   let numTv = 0;
   let vistiAnno = 0;
@@ -125,6 +126,7 @@ async function stats(querySnapshot, refYear){
 
   const attoriMap = new Map();
   const registiMap = new Map();
+  const generiMap = new Map();
 
   querySnapshot.forEach(doc => {
     const data = doc.data();
@@ -141,7 +143,7 @@ async function stats(querySnapshot, refYear){
 
     vistiAnno++;
     numStar[data.voto]++;
-
+    
     // attori
     const attori = data.attori || [];
     attori.forEach(({ name, id, numVisto }) => {
@@ -182,5 +184,6 @@ async function stats(querySnapshot, refYear){
 
   const top = { topAttori, topRegisti };
 
-  return { numMovie, numTv, vistiAnno, numStar, top };
+
+  return { id, tipo, numMovie, numTv, vistiAnno, numStar, top };
 }

@@ -87,8 +87,6 @@ const topFilm = topflop.topFilms;
 const flopFilm = topflop.flopFilms;
 renderTopFlop(topFilm, ulTop);
 renderTopFlop(flopFilm, ulFlop);
-//STATISTICHE
-statistiche(querySnapshot);
 
 
 async function getTopPersone(querySnapshot, numAttori, numRegisti) {
@@ -164,6 +162,7 @@ async function renderTopPersone(lista, ulElement) {
       span.innerHTML = `${persona.nome}<br>${persona.count.toFixed(2)} punti`;
 
       const link = document.createElement("a");
+      link.style="text-decoration: none; color: inherit";
       link.href = `scheda_persona.html?id=${persona.id}`;
 
       link.appendChild(img);
@@ -193,6 +192,7 @@ async function renderTopFlop(lista, ulElement) {
     span.textContent = `${film.titolo}`;
 
     const link = document.createElement("a");
+    link.style="text-decoration: none; color: inherit";
     link.href = `scheda_film.html?id=${film.numero}&tipo=${film.tipo}`;
 
     link.appendChild(img);
@@ -224,56 +224,4 @@ async function getTopFlop(querySnapshot) {
   });
   const top = {topFilms, flopFilms};
   return top;
-}
-
-async function statistiche(querySnapshot){
-  const statistiche = await stats(querySnapshot);
-  const stat = document.getElementById("statistiche"); 
-
-    if (statistiche && stat) {
-      stat.innerHTML = `
-        Numero Film in collezione: ${statistiche.numMovie}<br>
-        Numero Serie TV in collezione: ${statistiche.numTv}<br>
-        Visti quest'anno: ${statistiche.vistiAnno}<br>
-	Visti scorso anno: ${statistiche.vistiAnnoPrec}<br>
-        Distribuzione voti:<br>
-          ★☆☆☆☆: ${statistiche.numStar[1]}<br>
-          ★★☆☆☆: ${statistiche.numStar[2]}<br>
-          ★★★☆☆: ${statistiche.numStar[3]}<br>
-          ★★★★☆: ${statistiche.numStar[4]}<br>
-          ★★★★★: ${statistiche.numStar[5]}
-      `;
-    } else {
-      stat.textContent = "Errore nel caricamento delle statistiche.";
-    }
-}
-
-async function stats(querySnapshot){
-  const numRecord = querySnapshot.size;
-  let numMovie=0;
-  let numTv=0;
-  let vistiAnno=0;
-  let vistiAnnoPrec=0;
-  let numStar={0:0, 1:0, 2:0, 3:0, 4:0, 5:0};
-  querySnapshot.forEach(doc=>{
-    const data = doc.data();
-    if (data.tipo==="movie"){numMovie++;} else {numTv++;}
-    if (data.data_fine){
-      const vistonel = data.data_fine.toDate?.();
-      const year = vistonel.getFullYear();
-      const oggi = new Date().getFullYear();
-      if (year==oggi){vistiAnno++;}
-      if (year==oggi-1){vistiAnnoPrec++;}
-    }
-    switch(data.voto){
-      case 0: numStar[0]++; break;
-      case 1: numStar[1]++; break;
-      case 2: numStar[2]++; break;
-      case 3: numStar[3]++; break;
-      case 4: numStar[4]++; break;
-      case 5: numStar[5]++; break;
-    }
-  });
-  let stats={numMovie, numTv, vistiAnno, vistiAnnoPrec, numStar};
-  return stats;
 }

@@ -10,51 +10,52 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body class="home">
-  <div id="titleContainer">
-    <img src="assets/unclekevin.png" id="logo">
+  
+  <header class="header">
+    <img id="logo" src="assets/unclekevin.png" alt="Logo">
     <h1>I Saw You!</h1>
-  </div>
-  <div id="totalMovie"></div>
-  <br>
-  <button id="scarica-csv">Scarica CSV</button>
-  <div class="section">
-    <h2>Gli ultimi film visti</h2>
+  </header>
+
+  <section class="info">
+    <p id="totalMovie"></p>
+    <button id="scarica-csv">Scarica CSV</button>
+  </section>
+
+
+  <section class="section">
+    <h2>Ultimi film visti</h2>
     <div class="scroll-wrapper">
       <ul id="results"></ul>
     </div>
-  </div>
-  <br>
-  <div class="section">
-    <h2>
-    <span>Gli ATTORI più presenti nella raccolta</span>
-    <a href="topAttori.html" id="expAttori">Espandi-></a>
-  </h2>
+  </section>
+  
+  <section class="section">
+    <h2>Gli ATTORI più presenti nella raccolta <a href="topAttori.html" id="expAttori" style="text-decoration: none; color: inherit">Espandi-></a></h2>
     <div class="scroll-wrapper">
       <ul id="TopAttore"></ul>
     </div>
-  </div>
-  <div class="section">
+  </section>
+  
+  <section class="section">
     <h2>I REGISTI/CREATORI più presenti nella raccolta</h2>
     <div class="scroll-wrapper">
       <ul id="TopRegista"></ul>
     </div>
-  </div>
-  <div class="section">
+  </section>
+  
+  <section class="section">
     <h2>I film a 5 STELLE</h2>
     <div class="scroll-wrapper">
       <ul id="5Stars"></ul>
     </div>
-  </div>
-  <div class="section">
+  </section>
+  
+  <section class="section">
     <h2>I PEGGIORI film in raccolta</h2>
     <div class="scroll-wrapper">
       <ul id="1Star"></ul>
     </div>
-  </div>
-  <div>
-    <h2>Statistiche</h2>
-    <div id="statistiche"></div>
-  </div>
+  </section>
   <div id="navbar-placeholder"></div>
   <script>
     fetch("navbar.html")
