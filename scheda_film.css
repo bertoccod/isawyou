@@ -32,23 +32,35 @@ body {
   padding: 20px;
   margin-top: 3rem;
   margin-bottom: 60px;
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .film-card {
-  background-color: var(--input-bg);
+  background-color: var(--color-bg-alt);
   border: 1px solid var(--input-border);
-  border-radius: 30px;
-  padding: 1rem;
-  box-shadow: 0 0 6px var(--shadow-glow);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 0 12px var(--shadow-glow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   max-width: 60vh;
   margin: 0 auto 2rem;
 }
 
+.film-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 18px var(--shadow-glow);
+}
+
+
 .film-card img {
   width: 100%;
   max-width: 500px;
-  border-radius: 30px;
-  box-shadow: 0 0 20px var(--shadow-glow);
+  border-radius: 16px;
+  box-shadow: 0 0 12px var(--shadow-glow);
   display: block;
   margin: 0 auto 1rem;
 }
@@ -60,30 +72,25 @@ body {
 }
 
 .film-title {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 2.2rem;
   color: var(--color-accent);
-  margin: 1rem 0;
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+  text-shadow: 0 0 8px var(--shadow-glow);
 }
+
 
 #title {
   display: block;
 }
 
-#filmInfoCompact {
-  text-align: center;
-  font-size: 1.6rem;
-  margin: 1rem 0 0.5rem;
+#filmInfoCompact,
+#filmCountries {
+  font-size: 1.2rem;
   color: var(--color-secondary);
+  margin-bottom: 0.5rem;
 }
 
-#filmCountries {
-  text-align: center;
-  font-size: 1.4rem;
-  color: var(--color-secondary);
-  margin-bottom: 1rem;
-}
 
 .scroll-wrapper {
   overflow-x: auto;
@@ -122,6 +129,34 @@ a {
   text-decoration: none;
   color: inherit;
 }
+.section {
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 10px var(--shadow-glow);
+}
+
+.section h2 {
+  font-size: 1.3rem;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+  padding-left: 10px;
+  position: relative;
+}
+
+.section h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
 
 
 .date-row {
@@ -164,12 +199,14 @@ a {
 }
 
 .star {
-  cursor: pointer;
+  font-size: 2.4rem !important;
   color: var(--color-secondary);
-  transition: color 0.3s ease;
+  transition: transform 0.2s ease, color 0.3s ease;
 }
-.star {
-  font-size: 4rem !important;
+
+.star:hover {
+  transform: scale(1.2);
+  color: var(--color-star);
 }
 
 
@@ -178,7 +215,6 @@ a {
 }
 
 
-.star:hover,
 .star.active {
   color: var(--color-star);
 }
@@ -189,37 +225,27 @@ a {
   margin-bottom: 1rem;
 }
 
-button {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 8px var(--shadow-glow);
-  transition: background-color 0.3s ease;
-  display: block;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 5rem;
-
+#toggleSawed {
+  font-size: 2rem;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  box-shadow: 0 0 10px var(--shadow-glow);
+  transition: 0.3s ease;
+  display: block; margin-left: auto; margin-right: auto;
 }
 
-button:hover {
-  background-color: #00cc77;
+#toggleSawed:hover {
+  background-color: var(--color-accent-alt);
 }
+
 .trailer-box {
-  margin: 2rem auto;
-  text-align: center;
-  max-width: 560px;
-  width: 100%;
-  border-radius: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 14px var(--shadow-glow);
   overflow: hidden;
-  box-shadow: 0 0 12px var(--shadow-glow);
 }
+
 
 .trailer-box iframe {
   width: 100%;
@@ -227,11 +253,23 @@ button:hover {
   border: none;
   border-radius: 20px;
 }
+
+.note textarea {
+  width: 100%;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--color-text);
+  font-size: 1.1rem;
+  box-shadow: 0 0 8px var(--shadow-glow);
+}
+
 @media (hover: hover) and (pointer: fine) {
   body {
-  padding: 20px;
-  margin-top: 3rem;
-  margin-bottom: 60px;
+  padding: 12px;
+  margin-top: 1.5rem;
+  margin-bottom: 80px;
 }
 .film-card {
   padding: 2rem;
@@ -260,6 +298,9 @@ li {
 
 .star {font-size: 2rem !important;}
 
-button {font-size: 2.5rem;}
+button {
+  font-size: 2.2rem;
+  border-radius: 12px;
+}
 
 }

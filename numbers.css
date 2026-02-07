@@ -3,22 +3,28 @@
 /* ===================== */
 
 :root {
-  --color-bg: #0B1D1A;
+  --color-bg: #071512;
+  --color-bg-alt: #0F2420;
   --color-text: #E6F2EF;
-  --color-accent: #00FF99;
-  --color-secondary: #88BBAA;
+
+  --color-accent: #00E68A;
+  --color-accent-alt: #00B36A;
+
+  --color-secondary: #7FBFAE;
   --color-warning: #FF4F4F;
   --color-star: #FFD700;
 
   --button-bg: var(--color-accent);
   --button-text: var(--color-bg);
-  --input-bg: #112825;
-  --input-border: var(--color-secondary);
-  --shadow-glow: rgba(0, 255, 153, 0.2);
+
+  --input-bg: var(--color-bg-alt);
+  --input-border: var(--color-accent-alt);
+
+  --shadow-glow: rgba(0, 230, 138, 0.25);
 
   --font-main: 'Inter', 'Roboto', sans-serif;
   --font-size-base: 16px;
-  --font-size-title: 72px;
+  --font-size-title: 42px; /* mobile-first */
 }
 
 body.home {
@@ -26,15 +32,13 @@ body.home {
   color: var(--color-text);
   font-family: var(--font-main);
   font-size: var(--font-size-base);
-  margin: 0;
-  padding: 10px;
-   padding-bottom: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  margin: auto;
+  padding: auto 120px; /* spazio per navbar */
+  max-width: 85%;
+  margin-inline: auto;
 }
+
+
 #titleContainer {
   text-align: center;
   
