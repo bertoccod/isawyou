@@ -36,9 +36,9 @@ body.home {
   color: var(--color-text);
   font-family: var(--font-main);
   font-size: var(--font-size-base);
-  margin: 0;
-  padding: 20px 12px 120px; /* spazio per navbar */
-  max-width: 600px;
+  margin: auto;
+  padding: auto 120px; /* spazio per navbar */
+  max-width: 85%;
   margin-inline: auto;
 }
 
@@ -112,6 +112,7 @@ h1 {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   width: 85%;
   box-sizing: border-box;
+  margin:auto;
 }
 .section:hover {
   transform: translateY(-4px);
