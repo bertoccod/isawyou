@@ -3,22 +3,29 @@
 /* ===================== */
 
 :root {
-  --color-bg: #0B1D1A;
+  --color-bg: #071512;
+  --color-bg-alt: #0F2420;
   --color-text: #E6F2EF;
-  --color-accent: #00FF99;
-  --color-secondary: #88BBAA;
+
+  --color-accent: #00E68A;
+  --color-accent-alt: #00B36A;
+
+  --color-secondary: #7FBFAE;
   --color-warning: #FF4F4F;
   --color-star: #FFD700;
 
   --button-bg: var(--color-accent);
   --button-text: var(--color-bg);
-  --input-bg: #112825;
-  --input-border: var(--color-secondary);
-  --shadow-glow: rgba(0, 255, 153, 0.2);
+
+  --input-bg: var(--color-bg-alt);
+  --color-bg-alt: #0F2420;
+  --input-border: var(--color-accent-alt);
+
+  --shadow-glow: rgba(0, 230, 138, 0.25);
 
   --font-main: 'Inter', 'Roboto', sans-serif;
   --font-size-base: 16px;
-  --font-size-title: 24px;
+  --font-size-title: 42px; /* mobile-first */
 }
 
 /* ===================== */
@@ -31,7 +38,7 @@ body {
   font-family: var(--font-main);
   padding: 20px;
   margin-top: 3rem;
-  margin-bottom: 60px;
+  margin-bottom: 120px;
   animation: fadeIn 0.6s ease-out;
 }
 @keyframes fadeIn {
@@ -89,6 +96,9 @@ body {
   font-size: 1.2rem;
   color: var(--color-secondary);
   margin-bottom: 0.5rem;
+  display: block; margin-left: auto; margin-right: auto;
+  text-align: center;
+
 }
 
 
@@ -264,12 +274,33 @@ a {
   font-size: 1.1rem;
   box-shadow: 0 0 8px var(--shadow-glow);
 }
+#saveNoteBtn {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 8px var(--shadow-glow);
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+
+  /* allineamento a destra */
+  display: block;
+  margin-left: auto;
+}
+
+#saveNoteBtn:hover {
+  background-color: var(--color-accent-alt);
+}
+
 
 @media (hover: hover) and (pointer: fine) {
   body {
   padding: 12px;
   margin-top: 1.5rem;
-  margin-bottom: 80px;
+  margin-bottom: 120px;
 }
 .film-card {
   padding: 2rem;

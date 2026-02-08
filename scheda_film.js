@@ -1,4 +1,4 @@
-import { isSawed, addMovie, delMovie, updateMovieDates, getDates, getVoto, setVoto } from './dbops.js';
+import { isSawed, addMovie, delMovie, updateMovieDates, getDates, getVoto, setVoto, getNote, updateNote } from './dbops.js';
 import { openScheda, getProfilePhoto, renderTrailer } from './tmdb.js';
 
 const firebaseConfig = {
@@ -29,6 +29,7 @@ fetch("navbar.html")
 document.getElementById("singleDay").addEventListener("change", enableSingleDay);
 document.getElementById("starterDate").addEventListener("change", setStartDate);
 document.getElementById("endDate").addEventListener("change", setEndDate);
+document.getElementById("saveNoteBtn").addEventListener("click",addNote);
 
 const urlParams = new URLSearchParams(window.location.search);
 const movieId = urlParams.get('id');
@@ -48,6 +49,8 @@ let rating=0;
 document.getElementById("poster").src = `https://image.tmdb.org/t/p/w300${movieData.poster_path}`;
 document.getElementById("title").innerText = tipo=="movie" ? movieData.title : movieData.name;
 document.getElementById("overview").innerText = movieData.overview;
+let nota = document.getElementById("inputText");
+nota.value = await getNote(fb_id);
 await renderTrailer(movieId, tipo);
 
 
@@ -83,11 +86,14 @@ renderPersone(attoriPrincipali, document.getElementById("castList"));
 updateSpunta(tipo, movieData, registi, attoriPrincipali);
 
 
+
+
 async function updateSpunta(tipo, data, registi, attoriPrincipali) {
   try{
     const visto = await isSawed(fb_id); //CHIEDO A dbops SE È STATO VISTO
     let button = document.getElementById("toggleSawed");
-    button.style.color = visto ? "green" : "gray"; //CAMBIO STATO AL BOTTONE
+    button.style.color = visto ? "grey" : "green"; //CAMBIO STATO AL BOTTONE
+    button.style.background = visto ? "green": "gray";
     if (visto){
       const dates = await getDates(fb_id);
       if ((dates.startDate) && (dates.endDate)){
@@ -122,12 +128,15 @@ async function updateSpunta(tipo, data, registi, attoriPrincipali) {
           endDate = document.getElementById("endDate").value;
         }
         const rating = await getStarRating();
-        addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating);
+        nota = document.getElementById("inputText").value;
+        addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
 
-        button.style.color = "green";
+        button.style.color = "grey";
+        button.style.background = "green";
       } else {
         delMovie(fb_id);
-        button.style.color = "gray";
+        button.style.color = "green";
+        button.style.background = "gray";
       }
     };    
   } catch (error) {
@@ -159,7 +168,8 @@ async function setStartDate(){
     const esiste = await isSawed(fb_id);
     if (!esiste) {   
       rating = await getStarRating();
-      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating);
+      nota = document.getElementById("inputText").value;
+      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
       let button = document.getElementById("toggleSawed");
       button.style.color = "green";
     } else {
@@ -179,7 +189,8 @@ async function setEndDate(){
     const esiste = await isSawed(fb_id);
     if (!esiste) {   
       rating = await getStarRating();
-      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating);
+      nota = document.getElementById("inputText").value;
+      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
       let button = document.getElementById("toggleSawed");
       button.style.color = "green";
     } else {
@@ -218,7 +229,7 @@ function initStarListeners() {
             endDate = document.getElementById("endDate").value;
           }
           rating = await getStarRating();
-          addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate,tipo, rating);
+          addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate,tipo, rating, nota);
           await setVoto(fb_id, value);
           let button = document.getElementById("toggleSawed");
           button.style.color = "green";
@@ -281,3 +292,29 @@ async function renderPersone(lista, ulElement) {
   }
 }
 
+//AGGIUNGI NOTE
+async function addNote(params) {
+  
+  const visto = await isSawed(fb_id);
+  if (visto){
+    nota = document.getElementById("inputText").value;
+    updateNote(fb_id, nota);
+  } else {
+    const singleDay = document.getElementById("singleDay")
+    let startDate = document.getElementById("starterDate").value;
+    if (!startDate){startDate="";}
+    let endDate="";
+    if (singleDay.checked){
+      endDate = startDate;
+    } else {
+      endDate = document.getElementById("endDate").value;
+    }
+    const rating = await getStarRating();
+    nota = document.getElementById("inputText").value;
+    addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
+    let button = document.getElementById("toggleSawed");
+    button.style.color = "grey";
+    button.style.background = "green";
+  }
+  
+}

@@ -25,7 +25,7 @@ export async function isSawed(movieId){
   return docRef.exists;
 }
 
-export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating){
+export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota){
   const formStartData = startDate ? new Date(startDate) : null;
   const formEndData = endDate ? new Date(endDate) : null;
   if (!formStartData && formEndData) {
@@ -52,7 +52,8 @@ export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate
       attori: attoriPrincipali,
       tipo: tipo,
       voto: rating,
-      keywords: keywords
+      keywords: keywords,
+      note: nota
     };
   } else {
     movieDataToSave ={
@@ -64,7 +65,8 @@ export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate
       attori: attoriPrincipali,
       tipo: tipo,
       voto: rating,
-      keywords: keywords
+      keywords: keywords,
+      note: nota
     };
   }
   try {
@@ -192,4 +194,17 @@ export async function getDataHome(){
     console.error("Errore nel recupero dei dati:", error);
     return null;
   }
+}
+
+export async function updateNote(fb_id, newNota){
+  await db.collection("film").doc(fb_id).update({
+    note: newNota
+  });  
+}
+
+export async function getNote(fb_id){
+  const docRef = await db.collection("film").doc(fb_id).get();
+  const data = docRef.data();
+  const note = data?.note;
+  return note || "";
 }
