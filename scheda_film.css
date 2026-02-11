@@ -295,7 +295,6 @@ a {
   background-color: var(--color-accent-alt);
 }
 
-
 @media (hover: hover) and (pointer: fine) {
   body {
   padding: 12px;

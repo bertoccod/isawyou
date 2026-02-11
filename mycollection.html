@@ -10,27 +10,32 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body class="mycollection">
-  <div><input id="localSearch" class="search-input" type="text" placeholder="Cerca..." onkeyup="applyFilters()"></input></div>
+  <div>
+    <input id="localSearch" class="search-input" type="text" placeholder="Cerca..." onkeyup="applyFilters()"></input>
+  </div>
+  
   <div class="filters">
-  <div class="type-filters">
-    <button id="filter-movie" class="filter-button active">Film</button>
-    <button id="filter-tv" class="filter-button active">Serie TV</button>
+    <div class="type-filters">
+      <button id="filter-movie" class="filter-button active">Film</button>
+      <button id="filter-tv" class="filter-button active">Serie TV</button>
+    </div>
+    <div class="rating-filter">
+      <label for="starFilter">Voto:</label>
+      <select id="starFilter">
+        <option value="all">Tutti</option>
+        <option value="1">★</option>
+        <option value="2">★★</option>
+        <option value="3">★★★</option>
+        <option value="4">★★★★</option>
+        <option value="5">★★★★★</option>
+      </select>
+    </div>
   </div>
-  <div class="rating-filter">
-    <label for="starFilter">Voto:</label>
-    <select id="starFilter">
-      <option value="all">Tutti</option>
-      <option value="1">★</option>
-      <option value="2">★★</option>
-      <option value="3">★★★</option>
-      <option value="4">★★★★</option>
-      <option value="5">★★★★★</option>
-    </select>
-  </div>
-</div>
+
   <div class ="section">
     <ul id="results" class="grid-list"></ul>
   </div>
+  
   <div id="navbar-placeholder"></div>
   <script>
     fetch("navbar.html")

@@ -26,7 +26,7 @@ export async function isSawed(movieId){
 }
 
 export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota){
-  const formStartData = startDate ? new Date(startDate) : null;
+  let formStartData = startDate ? new Date(startDate) : null;
   const formEndData = endDate ? new Date(endDate) : null;
   if (!formStartData && formEndData) {
     formStartData = formEndData;
@@ -42,32 +42,17 @@ export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate
   } else {
     keywords = [...nomiRegisti, ...nomiAttori, data.name];
   }
-  if (tipo=="movie"){
-    movieDataToSave = {
-      title: data.title,
-      poster_path: data.poster_path,
-      data_inizio: formStartData,
-      data_fine: formEndData,
-      registi: registi,
-      attori: attoriPrincipali,
-      tipo: tipo,
-      voto: rating,
-      keywords: keywords,
-      note: nota
-    };
-  } else {
-    movieDataToSave ={
-      title: data.name,
-      poster_path: data.poster_path,
-      data_inizio: formStartData,
-      data_fine: formEndData,
-      registi: registi,
-      attori: attoriPrincipali,
-      tipo: tipo,
-      voto: rating,
-      keywords: keywords,
-      note: nota
-    };
+  movieDataToSave = {
+    title: tipo === "movie" ? data.title : data.name,
+    poster_path: data.poster_path,
+    data_inizio: formStartData,
+    data_fine: formEndData,
+    registi: registi,
+    attori: attoriPrincipali,
+    tipo: tipo,
+    voto: rating,
+    keywords: keywords,
+    note: nota
   }
   try {
     await db.collection("film").doc(fb_id).set(movieDataToSave);
@@ -118,7 +103,7 @@ export async function getVoto(fb_id) {
 export async function setVoto(fb_id, voto) {
   await db.collection("film").doc(fb_id).update({ voto });
 }
-
+/*
 export async function getMyCollection(num){
   const resultsList = document.getElementById("results");
   resultsList.innerHTML = "";
@@ -149,15 +134,13 @@ export async function getMyCollection(num){
     resultsList.appendChild(li);
   
   });
-}
+}*/
 
+//ESPORTA IL DB IN CSV - USATO IN HOME
 export async function esportaCSV() {
   const querySnapshot = await db.collection("film").orderBy("data_fine","desc").get();
   const dati = [];
-
-  // Intestazione CSV
-  dati.push(["data_inizio", "data_fine", "title", "voto"]);
-
+  dati.push(["data_inizio", "data_fine", "title", "voto"]); // Intestazione CSV
   querySnapshot.forEach((doc) => {
     const { data_inizio, data_fine, title, voto } = doc.data();
     dati.push([
@@ -186,6 +169,7 @@ function formattaData(data) {
   return new Date(data).toISOString().split("T")[0]; // JS Date
 }
 
+//RECUPERA TUTTI I DATI DEL DB IN ORDINE DISC DI DATA - USATO IN HOME/MYCOLLECTION
 export async function getDataHome(){
    try {
     const querySnapshot = await db.collection("film").orderBy("data_fine","desc").get();

@@ -10,21 +10,18 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body class="searchpage">
+  
   <div class="search-wrapper">
-  <div class="search-container">
-    <input id="searchInput" class="search-input" type="text" placeholder="Cerca...">
+    <div class="search-container">
+      <input id="searchInput" class="search-input" type="text" placeholder="Cerca...">
+    </div>
   </div>
-</div>
-
-
 
   <div class="section">
     <ul id="results" class="grid-list"></ul>
   </div>
 
   <div id="navbar-placeholder"></div>
-
-
   <script>
     fetch("navbar.html")
       .then(response => response.text())

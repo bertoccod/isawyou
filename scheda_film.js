@@ -229,6 +229,7 @@ function initStarListeners() {
             endDate = document.getElementById("endDate").value;
           }
           rating = await getStarRating();
+          nota = document.getElementById("inputText").value;
           addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate,tipo, rating, nota);
           await setVoto(fb_id, value);
           let button = document.getElementById("toggleSawed");
@@ -262,6 +263,7 @@ async function getStarRating(){
 }
 
 //GESTIONE FOTO PERSONE
+
 async function renderPersone(lista, ulElement) {
   ulElement.innerHTML = "";
 

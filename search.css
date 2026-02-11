@@ -77,6 +77,30 @@ body.searchpage {
   max-width: calc(33.33% - 1rem);
   font-size: 1.5rem;
 }
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Effetto per la locandina già vista */
+.already-seen img {
+  opacity: 0.6;
+  filter: grayscale(50%);
+}
+
+.seen-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-accent); /* Il tuo verde neon */
+  color: var(--color-bg);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: 0 0 10px var(--shadow-glow);
+}
 @media (hover: hover) and (pointer: fine) {
   body.searchpage {
   padding: 10px;

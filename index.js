@@ -10,7 +10,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-console.log('✅ index.js caricato');
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
@@ -18,20 +18,39 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.error('Errore nella registrazione:', err));
   });
 }
-
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    login();
+  }
+});
 
 
 //Login
 function login(){
-  const email = document.getElementById("email").value;
-  const pw = document.getElementById("password").value;
+  const emailEl = document.getElementById("email");
+  const pwEl = document.getElementById("password");
+  const btn = document.getElementById("loginBtn");
+  const errorEl = document.getElementById("errorMessage");
+  if (!emailEl || !pwEl) return;
+
+  const email = emailEl.value;
+  const pw = pwEl.value;
+
+  // Feedback visivo
+  const originalText = btn.innerText;
+  btn.innerText = "Accesso in corso...";
+  btn.disabled = true;
+
   auth.signInWithEmailAndPassword(email, pw)
     .then(() => {
       window.location.href = "home.html";
     })
     .catch((error) => {
-      document.getElementById("errorMessage").innerText="Login fallito. Controlla i dati";
-    });;
+      console.error("Errore:", error);
+      btn.innerText = originalText;
+      btn.disabled = false;
+      errorEl.innerText = "Login fallito. Controlla i dati";
+    });
 }
 
 //Logout
