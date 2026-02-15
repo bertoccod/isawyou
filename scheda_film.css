@@ -4,7 +4,7 @@
 
 :root {
   --color-bg: #071512;
-  --color-bg-alt: #0F2420;
+  --color-bg-alt: #1e4741;
   --color-text: #E6F2EF;
 
   --color-accent: #00E68A;
@@ -27,310 +27,427 @@
   --font-size-base: 16px;
   --font-size-title: 42px; /* mobile-first */
 }
-
-/* ===================== */
-/* 🎥 Scheda Film styles */
-/* ===================== */
-
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-main);
-  padding: 20px;
-  margin-top: 3rem;
-  margin-bottom: 120px;
-  animation: fadeIn 0.6s ease-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  /*background-color: var(--color-bg);*/
+  background: radial-gradient(
+    circle at top right, 
+    var(--color-bg-alt), 
+    var(--color-bg)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.film-card {
-  background-color: var(--color-bg-alt);
+/*HEADER SECTION*/
+
+.header{
+  display: flex;
+  width: 70vw;
+  align-items: stretch;
+  box-shadow: 0 0 12px var(--shadow-glow);
+  margin: 0 auto;
   border: 1px solid var(--input-border);
   border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: 0 0 12px var(--shadow-glow);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  max-width: 60vh;
-  margin: 0 auto 2rem;
+  overflow: hidden;
 }
-
-.film-card:hover {
+.header:hover {
   transform: translateY(-4px);
   box-shadow: 0 0 18px var(--shadow-glow);
 }
-
-
-.film-card img {
+#poster{
+  max-width: 75vw;
+  border-radius: 25px;
+  margin: 1rem;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Indispensabile per "ancorare" il bollino */
   width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
-  box-shadow: 0 0 12px var(--shadow-glow);
-  display: block;
-  margin: 0 auto 1rem;
+  min-height: 250px;
+  /* Rimuovi eventuali padding-top che spingono giù tutto */
 }
 
-.film-card span {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 1.6rem;
-}
+#bollino{
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  border: 4px solid var(--color-accent);
+  padding: 4px 12px;
+  color: var(--color-accent);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  
+  /* Ruotiamolo leggermente per farlo sembrare un timbro */
+  transform: rotate(15deg); 
+  
+  /* Evita che interferisca con i click se necessario */
+  pointer-events: none; 
+  z-index: 10;
+  display:none;
 
-.film-title {
+}
+.dati-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1; /* Prende tutto lo spazio rimanente */
+}
+#titolo{
   font-size: 2.2rem;
   color: var(--color-accent);
-  text-align: center;
-  margin: 0.5rem 0 1rem;
+  text-align: left;
+  margin: 1.5rem 2rem 1rem;
   text-shadow: 0 0 8px var(--shadow-glow);
+  font-family: var(--font-main);
 }
-
-
-#title {
-  display: block;
-}
-
-#filmInfoCompact,
-#filmCountries {
+#nazione,
+#YSG {
   font-size: 1.2rem;
   color: var(--color-secondary);
-  margin-bottom: 0.5rem;
-  display: block; margin-left: auto; margin-right: auto;
-  text-align: center;
-
-}
-
-
-.scroll-wrapper {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.scroll-wrapper ul {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.scroll-wrapper ul li {
-  scroll-snap-align: start;
-}
-li {
-  text-align: center;
-  flex: 0 0 calc(25% - 1rem); /* 4 locandine visibili */
-  max-width: calc(25% - 1rem);
-}
-
-li img {
-  width: 100%;
-  height: auto;
-}
-li span {
-  margin-top: 0.5rem;
+  text-align: left;
+  margin: 1rem 2rem 0.5rem;
   display: block;
-  color: var(--color-text);
-  font-size: 0.9rem;
+  font-family: var(--font-main);
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-.section {
-  background-color: var(--color-bg-alt);
-  border: 1px solid var(--input-border);
-  border-radius: 12px;
-  padding: 1rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 0 10px var(--shadow-glow);
-}
-
-.section h2 {
-  font-size: 1.3rem;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-  padding-left: 10px;
-  position: relative;
-}
-
-.section h2::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 4px;
-  background: var(--color-accent);
-  border-radius: 4px;
-}
-
-
-
-.date-row {
+/*OPERATION SECTION*/
+.operations{
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  width: 70vw;
   align-items: center;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.date-row label {
-  font-size: 1.2rem;
-  color: var(--color-text);
-  padding: 16px;
-}
-
-.date-row input[type="date"] {
-  padding: 16px;
-  border-radius: 6px;
+  box-shadow: 0 0 12px var(--shadow-glow);
+  margin: 2rem auto;
   border: 1px solid var(--input-border);
-  background-color: var(--input-bg);
-  color: var(--color-text);
-  font-size: 1.2rem;
+  border-radius: 20px;
 }
-
-.single-day {
+.operations:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 18px var(--shadow-glow);
+}
+.row1{
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.2rem;
 }
-
-
 .star-rating {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 0.5rem;
   margin: 1rem 0;
 }
-
 .star {
-  font-size: 2.4rem !important;
+  font-size: 2rem !important;
   color: var(--color-secondary);
   transition: transform 0.2s ease, color 0.3s ease;
 }
-
 .star:hover {
   transform: scale(1.2);
   color: var(--color-star);
+  cursor: pointer;
 }
-
-
 .star.selected {
   color: var(--color-star);
 }
-
-
 .star.active {
   color: var(--color-star);
 }
 
-#ratingValue {
-  text-align: center;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
 #toggleSawed {
-  font-size: 2rem;
+  font-size: 1.2rem;
   padding: 12px 24px;
   border-radius: 12px;
   background-color: var(--color-accent);
   color: var(--color-bg);
   box-shadow: 0 0 10px var(--shadow-glow);
   transition: 0.3s ease;
-  display: block; margin-left: auto; margin-right: auto;
+  display: block;
+  margin-left: 2rem;
 }
-
 #toggleSawed:hover {
   background-color: var(--color-accent-alt);
 }
 
-.trailer-box {
-  border-radius: 16px;
-  box-shadow: 0 0 14px var(--shadow-glow);
-  overflow: hidden;
+.row2{
+  display: flex;
+  align-items: center;
 }
-
-
-.trailer-box iframe {
-  width: 100%;
-  height: 315px;
-  border: none;
-  border-radius: 20px;
-}
-
-.note textarea {
-  width: 100%;
-  background-color: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 10px;
-  padding: 12px;
+#lbStarterDate,
+#lbEndDate,
+#lbSingleDay{
   color: var(--color-text);
-  font-size: 1.1rem;
-  box-shadow: 0 0 8px var(--shadow-glow);
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-right: 0.8rem;
+  font-family: var(--font-main);
 }
-#saveNoteBtn {
+
+#starterDate,
+#endDate{
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+#singleDay{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background-color: var(--input-bg);
+  border: 2px solid var(--color-accent);
+  border-radius: 4px; /* O 50% se lo vuoi tondo */
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  margin-right: 1rem;
+}
+#singleDay:checked {
+  background-color: var(--color-accent);
+}
+
+/* Aggiungiamo una "X" o un segno di spunta quando è selezionato */
+#singleDay:checked::after {
+  content: '✔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-bg); /* Il colore del segno di spunta */
+  font-size: 14px;
+}
+.row3{
+  display: flex;
+  flex-direction: column;
+}
+#noteText{
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  width: 65vw;
+  margin-top: 1rem;
+}
+#saveNote{
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 12px;
   background-color: var(--color-accent);
   color: var(--color-bg);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 8px var(--shadow-glow);
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-
-  /* allineamento a destra */
+  box-shadow: 0 0 10px var(--shadow-glow);
+  transition: 0.3s ease;
   display: block;
-  margin-left: auto;
+  max-width: fit-content;
+  margin-bottom: 1rem;
 }
-
-#saveNoteBtn:hover {
+#saveNote:hover {
   background-color: var(--color-accent-alt);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body {
-  padding: 12px;
-  margin-top: 1.5rem;
-  margin-bottom: 120px;
+/* TRAILER SECTION */
+#trailer {
+  width: 80%;
+  justify-content: center;
+  padding: 20px 0;
+  margin: 0 auto;
 }
-.film-card {
-  padding: 2rem;
-  max-width: 80%;
+#trailer-container{
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 16/9;
+  margin: 0 auto;
+}
+#trailer-container iframe{
+  width: 100% !important;
+  height: 100% !important;
+
+}
+/* CAPTION SECTION */
+.caption{
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  align-items: center;
+  box-shadow: 0 0 12px var(--shadow-glow);
+  margin: 2rem auto;
+  border: 1px solid var(--input-border);
+  border-radius: 20px;
+}
+#overview{
+  padding: 3px;
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  width: 65vw;
+  margin: 1rem;
+}
+/*CAST SECTION*/
+.cast{
+  margin-bottom: 5rem;
+}
+.cast-wrap {
+  width: 70vw;
+  box-shadow: 0 0 12px var(--shadow-glow);
+  border: 1px solid var(--input-border);
+  border-radius: 20px;
+  margin: 2rem 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.cast-wrap ul {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  list-style: none;
+  
+}
+.cast-wrap ul li {
+  scroll-snap-align: start;
+  text-align: center;
+  flex: 0 0 calc(25% - 1rem); /* 4 locandine visibili */
+  max-width: calc(25% - 1rem);
+  margin-left: 0;
+}
+.cast-wrap ul li img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.cast-wrap ul li span {
+  margin-top: 0.5rem;
+  display: block;
+  color: var(--color-secondary);
+  font-size: 0.9rem;
+}
+.cast-wrap ul li a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.film-card img {
-  width: 60%;
-  max-width: 500px;
+.cast-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cast-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cast-wrap::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
   border-radius: 10px;
 }
 
-.film-card span {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-}
+@media (max-width: 1100px) {
+  .header {
+    flex-direction: column; 
+    width: 95vw;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+    margin-top: 3rem;
+  }
+  .poster-box {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
+  #poster {
+    max-width: 100vw;
+    width: 100%;
+   
+  }
+  .dati-wrapper {
+    width: 100%;
+    align-items: center;
+    padding: 0 10px;
+  }
 
-#filmInfoCompact {font-size: 1.5rem;}
+  #titolo {
+    font-size: 2.9rem;
+    margin-top: 3rem;
+    text-align: center;
+    max-width: 90%;
+  }
 
-#filmCountries {font-size: 1.4rem;}
+  #bollino {
+    font-size: 1.5rem;
+    position: relative;   /* Torna nel flusso per non sovrapporsi al titolo su mobile */
+    top: 2;
+    right: 0;
+    margin: 5px auto;
+    transform: rotate(0deg); /* Più pulito su mobile */
+  }
+  #nazione,
+  #YSG {
+  font-size: 1.6rem;
+  }
 
-li {
-  flex: 0 0 calc(16% - 1rem); 
-  max-width: calc(16% - 1rem);
-}
-
-.star {font-size: 2rem !important;}
-
-button {
-  font-size: 2.2rem;
-  border-radius: 12px;
-}
-
+  /* 4. Operations: le righe diventano colonne */
+  .operations {
+    width: 95vw;
+  }
+  .star {
+    font-size: 5rem !important;
+  }
+  #toggleSawed{
+    font-size: 2.5rem;
+  }
+  .row2 {
+    gap: 10px;
+    width: 100%;
+  }
+  #lbStarterDate,
+  #lbEndDate,
+  #lbSingleDay{
+    font-size: 2rem;
+  }
+  #starterDate,
+  #endDate{
+    font-size: 2rem;
+  }
+  #singleDay{
+    width: 50px;
+    height: 50px;
+  }
+  #singleDay:checked::after{
+    font-size: 22px;
+  }
+  #noteText{
+    width:90vw;
+  }
+  #saveNote{
+    font-size:1.3rem;
+  }
+  .caption{
+    width: 90vw;
+  }
+  #overview{
+    width:88vw;
+    font-size: 2rem;
+  }
+  .cast-wrap{
+    width: 95vw;
+    margin-bottom: 3rem;
+  }
+  .cast-wrap ul li{
+    flex: 0 0 calc(33% - 1rem);
+    max-width: calc(33% - 1rem);
+  }
+  .cast-wrap ul li span {
+    font-size: 2rem;
+  }
+  #actors{
+    margin-bottom: 20rem;
+  }
 }

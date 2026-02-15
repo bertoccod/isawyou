@@ -3,67 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <title>I Saw You</title>
-  <link rel="stylesheet" href="scheda_film.css">
+  <link rel="stylesheet" href="scheda_film.css?v=1.1">
   <!-- Firebase SDK compat -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <div class="main-container">
 
-  <div class="film-card">
-    <div>
-      <img id="poster" src="" alt="Poster">
-      <div class="film-title">
-        <span id="title"></span>
-      </div><br>
-      <span id="overview"></span>
-      <div id="trailerContainer" class="trailer-box" style="display: none;"></div>
-      <div id="filmInfoCompact"></div>
-
-      <div id="filmCountries"></div>
-     <div class="section">
-        <h2>Regia</h2>
-        <div class="scroll-wrapper">
-          <ul id="directorList"></ul>
+    <section class="header">
+      <div class="poster-box">
+        <img id="poster"/>
+      </div>
+      <div class="info">
+        <span id="bollino">VISTO!</span>        
+        <div class="dati-wrapper">
+          <div id="titolo">Titolo Film</div>
+          <div id="YSG">Anno — Genere</div>
+          <div id="nazione">Paese</div>
         </div>
       </div>
-
-      <div class="section"> 
-        <h2>Cast</h2>
-        <div class="scroll-wrapper">
-          <ul id="castList"></ul>
+    </section>
+    
+    <section class="operations">
+      <div class="row1">
+        <div class="star-rating" id="starRating">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
         </div>
+        <button id="toggleSawed">V</button>
       </div>
-    </div>
-    <button id="toggleSawed">V</button><br>
-
-    <div class="date-row">
-      <label for="starterDate" id="starterDateLb">Inizio</label>
-      <input id="starterDate" type="date" />
-
-      <label for="endDate" id="endDateLb">Fine</label>
-      <input id="endDate" type="date" />
-
-      <label class="single-day">
+      <div class="row2">
+        <label id="lbStarterDate">Inizio: </label>
+        <input id="starterDate" type="date" />
+        <label id="lbEndDate">Fine: </label>
+        <input id="endDate" type="date" />
+        <label id="lbSingleDay">Giorno unico</label>
         <input id="singleDay" type="checkbox" />
-        Giorno unico
-      </label>
-    </div>
+      </div>
+      <div class="row3">
+        <textarea id="noteText" rows="4" placeholder="Note..."></textarea><br>
+        <button id="saveNote">Salva nota</button>
+      </div>
+    </section>
+
+    <section id="trailer">
+      <div id="trailer-container"></div>
+    </section>
+    
+    <section class="caption">
+      <span id="overview"></span>
+    </section>
+
+    <section class="cast">
+      <div class="cast-wrap" id="directors"><ul id="directorList"></ul></div>
+      <div class="cast-wrap" id="actors"><ul id="castList"></ul></div>
+    </section>
+  </div>
 
 
-    <div class="star-rating" id="starRating">
-      <span class="star" data-value="1">★</span>
-      <span class="star" data-value="2">★</span>
-      <span class="star" data-value="3">★</span>
-      <span class="star" data-value="4">★</span>
-      <span class="star" data-value="5">★</span>
-    </div>
-
-    <div class="note" id="noteSpace">
-      <textarea id="inputText" type="text" rows="4" placeholder="Note..."></textarea>
-      <button id="saveNoteBtn">Salva</button>
-</div>
 
   <div id="navbar-placeholder"></div>
   <script>

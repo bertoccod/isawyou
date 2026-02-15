@@ -20,40 +20,28 @@ auth.onAuthStateChanged((user) => {
     window.location.href = "index.html";
   }
 });
-/*
-fetch("navbar.html")
-.then(response => response.text())
-.then(data => {
-  document.getElementById("navbar").innerHTML = data;
-});*/
-document.getElementById("singleDay").addEventListener("change", enableSingleDay);
-document.getElementById("starterDate").addEventListener("change", setStartDate);
-document.getElementById("endDate").addEventListener("change", setEndDate);
-document.getElementById("saveNoteBtn").addEventListener("click",addNote);
 
 const urlParams = new URLSearchParams(window.location.search);
 const movieId = urlParams.get('id');
 const tipo = urlParams.get('tipo');
-const fb_id = movieId+"_"+tipo; //COSTRUISCO L'ID SU FIREBASE
-const link = "https://api.themoviedb.org/3/"+tipo+"/"+movieId+"?api_key="+API_KEY+"&language=it-IT&append_to_response=credits";
-console.log(link);
+const fb_id = movieId+"_"+tipo; //COSTRUISCO L'ID PER FIREBASE
 let movieData = "";
 let registi = "";
 let attoriPrincipali = "";
+const link = "https://api.themoviedb.org/3/"+tipo+"/"+movieId+"?api_key="+API_KEY+"&language=it-IT&append_to_response=credits";
 const datiTot = await openScheda(movieId, tipo);
-movieData = datiTot.data;
-registi = datiTot.registi;
-attoriPrincipali = datiTot.attoriPrincipali;
-console.log("Attori: ",attoriPrincipali);
-let rating=0;
+movieData = datiTot.data; //DATI SUL FILM
+registi = datiTot.registi; //DATI SUI REGISTI
+attoriPrincipali = datiTot.attoriPrincipali; //DATI SUGLI ATTORI
+
+//HEADER SECTION
 document.getElementById("poster").src = `https://image.tmdb.org/t/p/w300${movieData.poster_path}`;
-document.getElementById("title").innerText = tipo=="movie" ? movieData.title : movieData.name;
-document.getElementById("overview").innerText = movieData.overview;
-let nota = document.getElementById("inputText");
-nota.value = await getNote(fb_id);
-await renderTrailer(movieId, tipo);
-
-
+let visto = await isSawed(fb_id);
+if (visto){
+  const timbro = document.getElementById("bollino");
+  timbro.style.display="block";
+}
+document.getElementById("titolo").innerText = tipo=="movie" ? movieData.title : movieData.name;
 const infoParts = [];
 
 if (tipo === "tv") {
@@ -73,196 +61,77 @@ if (movieData.genres && movieData.genres.length > 0) {
   const generi = movieData.genres.map(g => g.name).join(", ");
   infoParts.push(generi);
 }
-document.getElementById("filmInfoCompact").textContent = infoParts.join(" — ");
-
+document.getElementById("YSG").textContent = infoParts.join(" — ");
 if (movieData.production_countries?.length) {
   const paesi = movieData.production_countries.map(c => c.name).join(" — ");
-  document.getElementById("filmCountries").textContent = paesi;
+  document.getElementById("nazione").textContent = paesi;
 }
 
+
+//OPERATION SETTINGS
+let rating=0;
+if (visto){
+  rating = await getVoto(fb_id);
+  setStarRating(rating);
+  let button = document.getElementById("toggleSawed");
+  button.style.background ="yellow";
+  const dates = await getDates(fb_id);
+  if ((dates.startDate) && (dates.endDate)){
+    document.getElementById("starterDate").valueAsDate = dates.startDate;
+    document.getElementById("endDate").valueAsDate = dates.endDate;
+  }
+  if (dates.startDate!=""){
+    if (dates.startDate.getTime()==dates.endDate.getTime()){
+      const singleDayCheckbox = document.getElementById("singleDay");
+      singleDayCheckbox.checked = true;
+      document.getElementById("endDate").style.display="none";
+      const endDateLb = document.getElementById("lbEndDate");
+      endDateLb.style.display = "none";
+    }
+  }
+  let nota = document.getElementById("noteText");
+  nota.value = await getNote(fb_id);
+}
+
+//TRAILER SECTION
+await renderTrailer(movieId, tipo);
+
+//CAPTION SECTION
+document.getElementById("overview").innerText = movieData.overview;
+
+//CAST SECTION
 renderPersone(registi, document.getElementById("directorList"));
 renderPersone(attoriPrincipali, document.getElementById("castList"));
 
-updateSpunta(tipo, movieData, registi, attoriPrincipali);
-
-
-
-
-async function updateSpunta(tipo, data, registi, attoriPrincipali) {
-  try{
-    const visto = await isSawed(fb_id); //CHIEDO A dbops SE È STATO VISTO
+//EVENT LISTNER
+document.getElementById("starterDate").addEventListener("change", () => {
+   writeUpdate(movieData, registi, attoriPrincipali);
+});
+document.getElementById("endDate").addEventListener("change", () => {
+   writeUpdate(movieData, registi, attoriPrincipali);
+});
+document.getElementById("singleDay").addEventListener("change", enableSingleDay);
+document.getElementById("toggleSawed").addEventListener("click", async() => {
+  const visto = await isSawed(fb_id);
+  if (visto){
+    await delMovie(fb_id);
     let button = document.getElementById("toggleSawed");
-    button.style.color = visto ? "grey" : "green"; //CAMBIO STATO AL BOTTONE
-    button.style.background = visto ? "green": "gray";
-    if (visto){
-      const dates = await getDates(fb_id);
-      if ((dates.startDate) && (dates.endDate)){
-        document.getElementById("starterDate").valueAsDate = dates.startDate;
-        document.getElementById("endDate").valueAsDate = dates.endDate;
-      }
-      if (dates.startDate!=""){
-        if (dates.startDate.getTime()==dates.endDate.getTime()){
-          const singleDayCheckbox = document.getElementById("singleDay");
-          singleDayCheckbox.checked = true;
-         enableSingleDay();
-        }
-      }
-      rating = await getVoto(fb_id);
-      setStarRating(rating);
-    } else {
-      setStarRating(0);
-    }
-    initStarListeners(); // aggiunge i listener alle stelle una sola volta
+    button.style.background ="#00E68A";
+    document.getElementById("starterDate").value = "";
+    document.getElementById("endDate").value = "";
+    setStarRating(0);
+    document.getElementById("noteText").value="";
 
-    //AGGIUNGO EVENT LISTENER AL BOTTONE
-    button.onclick = async function () {
-      const visto = await isSawed(fb_id);
-      if (!visto) {
-        const singleDay = document.getElementById("singleDay")
-        let startDate = document.getElementById("starterDate").value;
-        if (!startDate){startDate="";}
-        let endDate="";
-        if (singleDay.checked){
-          endDate = startDate;
-        } else {
-          endDate = document.getElementById("endDate").value;
-        }
-        const rating = await getStarRating();
-        nota = document.getElementById("inputText").value;
-        addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
-
-        button.style.color = "grey";
-        button.style.background = "green";
-      } else {
-        delMovie(fb_id);
-        button.style.color = "green";
-        button.style.background = "gray";
-      }
-    };    
-  } catch (error) {
-    console.error("Errore nel recupero dello stato del film:", error);
+  } else {
+    writeUpdate(movieData, registi, attoriPrincipali);
   }
-}
+});
+document.getElementById("saveNote").addEventListener("click", () => {
+   writeUpdate(movieData, registi, attoriPrincipali);
+});
+initStarListeners();
 
-//GESTIONE DATA
-function enableSingleDay(){
-  console.log("enableSingleDay triggered");
-  const singleDay = document.getElementById("singleDay").checked;
-  const startDateLb = document.getElementById("starterDateLb");
-  startDateLb.innerText = singleDay ? "Data" : "Data inizio";
-  const endDateLb = document.getElementById("endDateLb");
-  endDateLb.style.display = singleDay ? "none" : "inline";
-  const endDate = document.getElementById("endDate");
-  endDate.style.display = singleDay ? "none" : "inline";
-  if (singleDay){
-    endDate.value = document.getElementById("starterDate").value;
-  }
-}
-async function setStartDate(){
-  const startDate = document.getElementById("starterDate").value;
-  let endDate = document.getElementById("endDate").value;
-  if (!endDate){
-    endDate = startDate;
-  }
-  try {
-    const esiste = await isSawed(fb_id);
-    if (!esiste) {   
-      rating = await getStarRating();
-      nota = document.getElementById("inputText").value;
-      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
-      let button = document.getElementById("toggleSawed");
-      button.style.color = "green";
-    } else {
-      await updateMovieDates(fb_id, startDate, endDate);
-    }
-  } catch (error){
-    console.error("Errore durante l'aggiornamento della data del film:", error);
-  }
-}
-async function setEndDate(){
-  const endDate = document.getElementById("endDate").value;
-  let startDate = document.getElementById("starterDate").value;
-  if (!startDate){
-    startDate = endDate;
-  }
-  try {
-    const esiste = await isSawed(fb_id);
-    if (!esiste) {   
-      rating = await getStarRating();
-      nota = document.getElementById("inputText").value;
-      await addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
-      let button = document.getElementById("toggleSawed");
-      button.style.color = "green";
-    } else {
-      await updateMovieDates(fb_id, startDate, endDate);
-    }
-  } catch (error){
-    console.error("Errore durante l'aggiornamento della data del film:", error);
-  }
-}
-
-//GESTIONE STELLE
-function initStarListeners() {
-  const stars = document.querySelectorAll('#starRating .star');
-
-  // Rimuovi eventuali listener precedenti (opzionale ma consigliato)
-  stars.forEach(star => {
-    const newStar = star.cloneNode(true);
-    star.parentNode.replaceChild(newStar, star);
-  });
-
-  // Aggiungi i nuovi listener
-  const freshStars = document.querySelectorAll('#starRating .star');
-  freshStars.forEach(star => {
-    star.addEventListener('click', async () => {
-      const value = parseInt(star.getAttribute('data-value'));
-      await setStarRating(value);
-      try {
-        const visto = await isSawed(fb_id); //CHIEDO A dbops SE È STATO VISTO
-        if (!visto){// SE HO IMPOSTATO IL VOTO MA NON HO ANCORA AGGIUNTO IL FILM A FIREBASE LO AGGIUNGO
-          const singleDay = document.getElementById("singleDay")
-          const startDate = document.getElementById("starterDate").value;
-          let endDate="";
-          if (singleDay.checked){
-            endDate = startDate;
-          } else {
-            endDate = document.getElementById("endDate").value;
-          }
-          rating = await getStarRating();
-          nota = document.getElementById("inputText").value;
-          addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate,tipo, rating, nota);
-          await setVoto(fb_id, value);
-          let button = document.getElementById("toggleSawed");
-          button.style.color = "green";
-        } else {
-          await setVoto(fb_id, value);
-        }
-        console.log(`Voto ${value} salvato per il film ${fb_id}`);
-      } catch (error) {
-        console.error("Errore nel salvataggio del voto:", error);
-      }
-    });
-  });
-}
-async function setStarRating(rating){
-  const stars = document.querySelectorAll('#starRating .star');
-  stars.forEach(star => {
-    const value = parseInt(star.getAttribute('data-value'));
-    star.classList.toggle('selected', value <= rating);
-  });
-}
-async function getStarRating(){
-  const stars = document.querySelectorAll('#starRating .star');
-  let rating = 0;
-  stars.forEach(star => {
-    if (star.classList.contains('selected')) {
-      rating = parseInt(star.getAttribute('data-value'));
-    }
-  });
-  return rating;
-}
-
-//GESTIONE FOTO PERSONE
+//WORK FUNCTIONS
 
 async function renderPersone(lista, ulElement) {
   ulElement.innerHTML = "";
@@ -294,29 +163,81 @@ async function renderPersone(lista, ulElement) {
   }
 }
 
-//AGGIUNGI NOTE
-async function addNote(params) {
-  
-  const visto = await isSawed(fb_id);
-  if (visto){
-    nota = document.getElementById("inputText").value;
-    updateNote(fb_id, nota);
-  } else {
-    const singleDay = document.getElementById("singleDay")
-    let startDate = document.getElementById("starterDate").value;
-    if (!startDate){startDate="";}
-    let endDate="";
-    if (singleDay.checked){
-      endDate = startDate;
-    } else {
-      endDate = document.getElementById("endDate").value;
+async function setStarRating(rating){
+  console.log("Sono in set star");
+  const stars = document.querySelectorAll('#starRating .star');
+  stars.forEach(star => {
+    const value = parseInt(star.getAttribute('data-value'));
+    star.classList.toggle('selected', value <= rating);
+  });
+}
+async function getStarRating(){
+  const stars = document.querySelectorAll('#starRating .star');
+  let rating = 0;
+  stars.forEach(star => {
+    if (star.classList.contains('selected')) {
+      rating = parseInt(star.getAttribute('data-value'));
     }
-    const rating = await getStarRating();
-    nota = document.getElementById("inputText").value;
-    addMovie(fb_id, movieData, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota);
-    let button = document.getElementById("toggleSawed");
-    button.style.color = "grey";
-    button.style.background = "green";
+  });
+  return rating;
+}
+
+function initStarListeners() {
+        
+  const stars = document.querySelectorAll('#starRating .star');
+
+  // Rimuovi eventuali listener precedenti (opzionale ma consigliato)
+  stars.forEach(star => {
+    const newStar = star.cloneNode(true);
+    star.parentNode.replaceChild(newStar, star);
+  });
+
+  // Aggiungi i nuovi listener
+  const freshStars = document.querySelectorAll('#starRating .star');
+  freshStars.forEach(star => {
+    star.addEventListener('click', async () => {
+      const value = parseInt(star.getAttribute('data-value'));
+      console.log("sono in initStar");
+      await setStarRating(value);
+      writeUpdate(movieData, registi, attoriPrincipali);
+    });
+  });
+}
+
+function enableSingleDay(){
+  const singleDay = document.getElementById("singleDay").checked;
+  const startDateLb = document.getElementById("lbStarterDate");
+  startDateLb.innerText = singleDay ? "Data: " : "Inizio: ";
+  const endDateLb = document.getElementById("lbEndDate");
+  endDateLb.style.display = singleDay ? "none" : "inline";
+  const endDate = document.getElementById("endDate");
+  endDate.style.display = singleDay ? "none" : "inline";
+  if (singleDay){
+    endDate.value = document.getElementById("starterDate").value;
   }
-  
+  writeUpdate(movieData, registi, attoriPrincipali);
+}
+
+//async function writeUpdate(fb_id, data, registi, attoriPrincipali){
+async function writeUpdate(data, registi, attoriPrincipali){
+  const visto = await isSawed(fb_id);
+  const startDate = document.getElementById("starterDate").value;
+  const unico = document.getElementById("singleDay").checked;
+  let endDate="";
+  if (unico){
+    endDate = startDate;
+  } else {
+    endDate = document.getElementById("endDate").value;
+  }
+  const rating = await getStarRating();
+  const nota = document.getElementById("noteText").value;
+  console.log("id: "+fb_id);
+  console.log("start Date: "+startDate);
+  console.log("end Date: "+endDate);
+  console.log("voto: "+rating);
+  console.log("note: "+nota);
+  addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota)
+  let button = document.getElementById("toggleSawed");
+  button.style.background ="yellow";
+
 }

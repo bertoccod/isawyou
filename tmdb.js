@@ -75,7 +75,7 @@ export async function renderTrailer(id, tipo) {
     );
     if (trailer) {
       const trailerUrl = `https://www.youtube.com/embed/${trailer.key}`;
-      const container = document.getElementById("trailerContainer");
+      const container = document.getElementById("trailer-container");
       container.innerHTML = `
         <iframe
           src="${trailerUrl}"
@@ -84,6 +84,9 @@ export async function renderTrailer(id, tipo) {
           allowfullscreen>
         </iframe>`;
       container.style.display = "block";
+    } else {
+      let sec = document.getElementById("trailer");
+      sec.style.display="none";
     }
   } catch (error) {
     console.error("Errore nel recupero trailer:", error);

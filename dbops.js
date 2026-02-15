@@ -25,9 +25,10 @@ export async function isSawed(movieId){
   return docRef.exists;
 }
 
+//INSERIMENTO NUOVO TITOLO NEL DB - USATO IN SCHEDA FILM
 export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate, endDate, tipo, rating, nota){
   let formStartData = startDate ? new Date(startDate) : null;
-  const formEndData = endDate ? new Date(endDate) : null;
+  let formEndData = endDate ? new Date(endDate) : null;
   if (!formStartData && formEndData) {
     formStartData = formEndData;
   } else if (!formEndData && formStartData) {
@@ -55,13 +56,14 @@ export async function addMovie(fb_id, data, registi, attoriPrincipali, startDate
     note: nota
   }
   try {
-    await db.collection("film").doc(fb_id).set(movieDataToSave);
+    await db.collection("film").doc(fb_id).set(movieDataToSave, { merge: true });
     console.log("Dati del film aggiunti a Firestore con successo!");
   } catch (error) {
     console.error("Errore durante l'aggiunta del film a Firestore:", error);
   }
 }
 
+//ELIMINAZIONE TITOLO DAL DAB - USATO IN SCHEDA FILM
 export async function delMovie(fb_id){
   try{
     await db.collection("film").doc(fb_id).delete();
