@@ -213,9 +213,16 @@ h1 {
   box-shadow: 0 -2px 10px var(--shadow-glow);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1100px) {
   body.home {
     max-width: 100%;
     padding: 20px 8px 120px;
+  }
+  .section {
+    margin-bottom: 3rem;
+  }
+  .scroll-wrapper ul li{
+    flex: 0 0 calc(33% - 1rem);
+    max-width: calc(33% - 1rem);
   }
 }
