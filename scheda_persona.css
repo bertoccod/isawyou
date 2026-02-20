@@ -321,11 +321,22 @@ h2 {
   }
   #vistiSection{
     width: 95vw;
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black); 
+    isolation: isolate;
   }
+
   .scroll-wrapper{
     width: 95vw;
     margin-bottom: 3rem;
+    overflow-x: auto;
+    width: 100%;
+    padding: 0;
   }
+  .scroll-wrapper ul {
+    padding: 1rem;
+   } 
   .scroll-wrapper ul li{
     flex: 0 0 calc(33% - 1rem);
     max-width: calc(33% - 1rem);
