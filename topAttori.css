@@ -1,86 +1,114 @@
-/* ===================== */
-/* 🎨 Variabili globali  */
-/* ===================== */
-
 :root {
-  --color-bg: #0B1D1A;
-  --color-text: #E6F2EF;
-  --color-accent: #00FF99;
-  --color-secondary: #88BBAA;
-  --color-warning: #FF4F4F;
-  --color-star: #FFD700;
-
-  --button-bg: var(--color-accent);
-  --button-text: var(--color-bg);
-  --input-bg: #112825;
-  --input-border: var(--color-secondary);
-  --shadow-glow: rgba(0, 255, 153, 0.2);
-
-  --font-main: 'Inter', 'Roboto', sans-serif;
-  --font-size-base: 16px;
-  --font-size-title: 24px;
-}
-/* ===================== */
-/* 🎬 topAttori styles */
-/* ===================== */
-
-body.topAttori {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-main);
-  padding: 20px;
-  margin-top: 3em;
-  margin-bottom: 60px; /* spazio per navbar */
-}
-h1 {
-  text-align: center;
-  font-size: 2rem;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
+  --bg: #050d0b;
+  --glass: rgba(15, 36, 32, 0.85);
+  --accent: #00e68a;
+  --text: #e6f2ef;
+  --secondary: #7fbfae;
 }
 
-h2 {
-  text-align: center;
-  color: var(--color-text);
-  font-size: 1rem;
-  margin: 1.5rem 0 1.5rem;
-}
-.grid-list{
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-}
-.grid-list li {
-  
-  text-align: center;
-   /*max-width: 120px;*/ /* Rimuovi o commenta questa riga se non necessaria */
-  flex: 0 0 calc(25% - 1rem); /* 3 locandine visibili */
-  max-width: calc(25% - 1rem);
-  font-size: 1rem; /* Modificato da 1.5rem a 1rem */
-}
-
-.grid-list li img {
+/* Reset per evitare il bianco di fondo */
+html, body {
+  background-color: var(--bg) !important;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 0 10px var(--shadow-glow);
 }
 
-.grid-list li span {  
+body.top-actors-page {
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra orizzontalmente il contenuto */
+  padding: 40px 20px 100px;
+  min-height: 100vh;
+}
+
+.glass-container {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  padding: 20px;
+  background: var(--glass);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 230, 138, 0.2);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+/* Card stile moderno */
+.actor-card {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.actor-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+
+.img-wrapper {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 2px solid rgba(0, 230, 138, 0.3);
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.actor-name {
   display: block;
-  padding-top: 5px;
-  line-height: 1.2;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 5px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body.topAttori {padding: 10px;}
-  .grid-list {gap: 0.5rem;}
+.score-tag {
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(0, 230, 138, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
 
-.grid-list li {
-    flex: 0 0 calc(20% - 0.4rem); /* 🛑 SUGGERIMENTO: passa a 5 elementi per riga su schermi grandi */
-    max-width: calc(20% - 0.4rem);
-    font-size: 0.9rem; /* Testo leggermente più piccolo su desktop */
-    margin-top: 10px;
-    margin-bottom: 20px;
+/* Mobile */
+@media (max-width: 600px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colonne fisse su mobile */
+  }
+  .page-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
   }
 }

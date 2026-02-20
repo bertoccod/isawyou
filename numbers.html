@@ -1,31 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>I Saw You - Statistiche</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Saw You - Data Dashboard</title>
   <link rel="stylesheet" href="numbers.css">
-  <!-- Firebase SDK compat -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
-<body class="home">
-  <div id="titleContainer">
-    <img src="assets/unclekevin.png" id="logo">
-    <h1>I Saw You!</h1>
+<body class="stats-dashboard">
+
+  <div class="glass-container">
+    <header class="dashboard-header">
+      <div class="brand">
+        <img src="assets/unclekevin.png" id="logo" alt="Logo">
+        <div class="brand-text">
+          <h1>I SAW YOU</h1>
+          <span>Statistiche</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="stats-wrapper">
+      <div id="global-target"></div>
+      
+      <div class="separator">
+        <span>Timeline Annuale</span>
+      </div>
+
+      <div id="timeline-target"></div>
+    </main>
   </div>
-  <div id="global"> 
-  </div>
-  <br>
+
   <div id="navbar-placeholder"></div>
   <script>
-    fetch("navbar.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("navbar-placeholder").innerHTML = data;
-      });
+    fetch("navbar.html").then(r => r.text()).then(d => document.getElementById("navbar-placeholder").innerHTML = d);
   </script>
   <script type="module" src="numbers.js"></script>
- 
 </body>
 </html>
