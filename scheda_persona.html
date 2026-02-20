@@ -9,16 +9,37 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
-<body class="scheda-persona">
-  <div class="film-card">
-    <img id="profilo" src="" alt="Foto profilo" />
-    <h1 id="nome"></h1>
+<body>
+  <div class="main-container">
 
-    <div id="personInfoCompact"></div>
-
-    <div class="section">
+    <section class="header">
+      <div class="profile-box">
+        <img id="profilo" alt="Foto profilo"/>
+      </div>
+      <div class="info">
+        <div class="dati-wrapper">
+          <h1 id="nome"></h1>
+          <div id="natoil"></div>
+          <div id="natoa"></div>
+          <div id="mortoil"></div>
+          <div id="eta"></div>
+          <div id="numeri"></div>
+          <div id="images"></div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="vistiSection">
+      <h2>Film visti</h2>
+      <div class="scroll-wrapper">
+        <ul id="visti"></ul>
+      </div>
+    </section>
+    <div class="section" id ="filmogSection">
       <h2>Filmografia</h2>
-      <table id="filmografia" class="film-table"></table>
+      <table id="filmRecitati" class="film-table"></table>
+      <table id="serieRecitate" class="film-table"></table>
+      <table id="filmDiretti" class="film-table"></table>
+      <table id="serieDirette" class="film-table"></table>
     </div>
 
   </div>
